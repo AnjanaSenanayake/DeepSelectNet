@@ -1,3 +1,5 @@
 .idea
-/data
+/datasets
+materials
+minimap2
 /nn_data.csv
