@@ -6,9 +6,9 @@ from fast5_research import Fast5
 from random import randrange
 
 NANOPORE_MODEL = "nanopore_model.txt"
-REF_FILE = "../datasets/covid/nCov-2019-ref.fasta"
-DATASET = "../datasets/covid/single-fast5/"
-OUTPUT_FILE = "../datasets/covid/sp1_train_data.csv"
+REF_FILE = "datasets/covid/sp1/nCov-2019-ref.fasta"
+DATASET = "datasets/covid/sp1/single_fast5/"
+OUTPUT_FILE = "datasets/covid/sp1/sp1_train_data.csv"
 BASE_SAMPLING_RATE = 12
 DIGITIZATION = 8192
 RANGE = 1402.882
@@ -18,7 +18,7 @@ def print_all_raw_data(fast5_file):
     with get_fast5_file(fast5_file, mode="r") as f5:
         with Fast5(fast5_file) as fh5:
             for read in f5.get_reads():
-                with open('../datasets/covid/out.paf') as paf:
+                with open('datasets/covid/out.paf') as paf:
                     raw_data = read.get_raw_data()
                     # print(read.read_id, raw_data)
                     paf_line = line_that_contain(read.read_id, paf)
