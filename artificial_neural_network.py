@@ -12,9 +12,12 @@ tf.__version__
 
 
 # Importing the dataset
-dataset = pd.read_csv('../datasets/covid/sp1_train_data_sample.csv')
+dataset = pd.read_csv('/storage/e14317/covid/train_data.csv')
+validation_dataset = pd.read_csv('/storage/e14317/zymo/Zymo-GridION-EVEN-BB-SN/train_data.csv')
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, -1].values
+X_val = validation_dataset.iloc[:,:-1].values
+y_val = validation_dataset.iloc[:,-1].values
 
 mu = np.mean(X[:,:])
 stdev = np.std(X[:,:])
@@ -35,6 +38,7 @@ from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
+X_val = sc.transform(X_val)
 
 
 # Initializing the ANN
@@ -50,15 +54,21 @@ ann.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
 # Compiling the ANN
 ann.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
 # Training the ANN on the Training set
-ann.fit(X_train, y_train, batch_size = 32, epochs = 100)
+ann.fit(X_train, y_train, batch_size = 128, epochs = 100)
 
 # Predicting the Test set results
 y_pred = ann.predict(X_test)
+y_val_pred = ann.predict(X_val)
 y_pred = (y_pred > 0.5)
+y_val_pred = (y_val_pred > 0.5)
 print(np.concatenate((y_pred.reshape(len(y_pred),1), y_test.reshape(len(y_test),1)),1))
 
 # Making the Confusion Matrix
 from sklearn.metrics import confusion_matrix, accuracy_score
 cm = confusion_matrix(y_test, y_pred)
 print(cm)
-accuracy_score(y_test, y_pred)
+cm = confusion_matrix(y_val, y_val_pred)
+print(cm)
+print(accuracy_score(y_test, y_pred))
+print(accuracy_score(y_val, y_val_pred))
+

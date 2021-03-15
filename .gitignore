@@ -2,3 +2,4 @@
 /datasets/*
 /materials/*
 /minimap2
+__pycache__
