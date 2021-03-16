@@ -8,16 +8,17 @@ from tensorflow.keras.models import *
 from tensorflow.keras.layers import *
 from tensorflow.keras.callbacks import *
 from tensorflow.keras.optimizers import *
+from data_generator import Data_Generator
 tf.__version__
 
 
 # Importing the dataset
-dataset = pd.read_csv('/storage/e14317/covid/train_data.csv')
-validation_dataset = pd.read_csv('/storage/e14317/zymo/Zymo-GridION-EVEN-BB-SN/train_data.csv')
+dataset = pd.read_csv('datasets/covid/sp1_train_data.csv')
+#validation_dataset = pd.read_csv('/storage/e14317/zymo/Zymo-GridION-EVEN-BB-SN/train_data.csv')
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, -1].values
-X_val = validation_dataset.iloc[:,:-1].values
-y_val = validation_dataset.iloc[:,-1].values
+#X_val = validation_dataset.iloc[:,:-1].values
+#y_val = validation_dataset.iloc[:,-1].values
 
 mu = np.mean(X[:,:])
 stdev = np.std(X[:,:])
@@ -38,7 +39,7 @@ from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
-X_val = sc.transform(X_val)
+#X_val = sc.transform(X_val)
 
 
 # Initializing the ANN
@@ -55,6 +56,10 @@ ann.add(tf.keras.layers.Dense(units=1, activation='sigmoid'))
 ann.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
 # Training the ANN on the Training set
 ann.fit(X_train, y_train, batch_size = 128, epochs = 100)
+
+data_generator = Data_Generator(X_train, y_train, 128)
+print(data_generator.X.shape)
+ann.fit_generator(generator=data_generator,steps_per_epoch = int(len(y_train) // 128),epochs = 10)
 
 # Predicting the Test set results
 y_pred = ann.predict(X_test)
