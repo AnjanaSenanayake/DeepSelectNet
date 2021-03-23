@@ -11,4 +11,6 @@ DATASET = "datasets/covid/single_fast5/"
 
 # OUTPUT_FILE = "/storage/e14317/covid/train_data.csv"
 OUTPUT_FILE = "datasets/covid/train_data.csv"
-OUTPUT_NPY_DIR = "datasets/covid/train/"
+TRAIN_DIR = "datasets/covid/train/"
+
+NPY_LIST_FILE = "datasets/covid/train.txt"
