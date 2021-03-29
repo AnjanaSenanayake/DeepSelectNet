@@ -1,10 +1,11 @@
 import numpy as np
 from tensorflow.python.keras.utils.data_utils import Sequence
+from LocalConfigs import *
 
 class Data_Generator(Sequence):
   
   '''Initialization'''
-  def __init__(self, list_IDs, batch_size=3, dim=(64,501), n_classes=2, shuffle=True):
+  def __init__(self, list_IDs, batch_size, dim=(64,501), n_classes=2, shuffle=True):
         
         self.dim = dim
         self.batch_size = batch_size
@@ -27,7 +28,7 @@ class Data_Generator(Sequence):
       for i, ID in enumerate(list_IDs_temp):
           # Store sample
           print(ID)
-          data = np.load('datasets/covid/train/' + ID + '.npy')
+          data = np.load(TRAIN_DIR + ID + '.npy')
           X = data[:, :-1]
     
           # Store class

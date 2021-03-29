@@ -13,10 +13,12 @@ RANGE = 1402.882
 fast5_file_count = 0
 np_file_count = 0
 np_array = []
+np_noise_array = []
 
 
 def print_all_raw_data(fast5_file):
     global np_array
+    global np_noise_array
     global fast5_file_count
     global np_file_count
     with get_fast5_file(fast5_file, mode="r") as f5:
@@ -31,31 +33,35 @@ def print_all_raw_data(fast5_file):
 
                 rand_seed = len(raw_data) - 500
 
-                for i in range(5):
+                for i in range(8):
                     start_idx = randrange(rand_seed)
                     read_segment = raw_data[start_idx:start_idx + 500]
                     read_segment_converted = convert_to_pico(read_segment, fh5.channel_meta['offset'])
                     np_array_temp = np.asarray(read_segment_converted, dtype=np.float32)
+                    np_noise_array = np.append(np_noise_array, np_array_temp)
                     np_array_temp = np.append(np_array_temp, 1)
                     np_array = np.append(np_array, np_array_temp, axis=0)
 
-                    mu = np.mean(read_segment_converted)
-                    stdev = np.std(read_segment_converted)
-                    noise_array = np.random.normal(mu, stdev, read_segment_converted.shape)
-                    noise_array = np.append(noise_array, 0)
-                    np_array = np.append(np_array, noise_array, axis=0)
-
-                    # print_line = ','.join(map(str, read_segment_converted)) + ',0\n'
-                    # print(print_line)
-                    # raw_reads.write(print_line)
+                # print_line = ','.join(map(str, read_segment_converted)) + ',0\n'
+                # print(print_line)
+                # raw_reads.write(print_line)
 
     if fast5_file_count == 1000:
         fast5_file_count = 0
         np_file_count = np_file_count + 1
         np_array = np_array.reshape(-1, 501)
+        mu = np.mean(np_noise_array)
+        stdev = np.std(np_noise_array)
+        np_noise_array = np.random.normal(mu, stdev, np_noise_array.shape)
+        np_noise_array = np_noise_array.reshape(-1, 500)
+        np_label_array = np.zeros(len(np_noise_array))
+        np_noise_array = np.hstack((np_noise_array, np.atleast_2d(np_label_array).T))
+        np_array = np.append(np_array, np_noise_array, axis=0)
+        np.random.shuffle(np_array)
         print(np_array.shape)
         np.save(TRAIN_DIR + str(np_file_count), np_array)
         np_array = []
+        np_noise_array = []
 
 
 def line_that_contain(string, fp):
@@ -94,6 +100,6 @@ if __name__ == '__main__':
                     files_count = files_count + 1
                     files_per = str(files_count) + '/' + len_dirs
                 print(str(file_count) + '/' + str(len(files)) + ' | ' + files_per)
-                if files_count == 5:
-                    break
+                # if files_count == 5:
+                #    sys.exit()
     raw_reads.close()
