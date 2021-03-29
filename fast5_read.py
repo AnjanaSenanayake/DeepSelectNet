@@ -1,4 +1,6 @@
 import os
+import threading
+
 from ont_fast5_api.fast5_interface import get_fast5_file
 import numpy as np
 from main import load_model_values, ref_reads, call_raw_values
@@ -77,6 +79,25 @@ def convert_to_pico(raw_data_arr, offset):
     return arr
 
 
+def iterate_dirs(directs):
+    print(directs)
+    direc_count = 0
+    for direc in directs:
+        for fast5_files in os.walk(DATASET + direc):
+            if len(fast5_files) > 0:
+                direc_count = direc_count + 1
+                fast5_count = 0
+                for fast5_file in fast5_files:
+                    if len(fast5_file) > 0:
+                        for k, fi in enumerate(fast5_file):
+                            if fi.endswith(".fast5"):
+                                fast5_count = fast5_count + 1
+                                print(str(fast5_count) + '/' + str(len(fast5_file)) , str(direc_count) + '/' + str(len(directs)))
+                                print_all_raw_data(DATASET + '/' + direc + '/' + fi)
+                                # if files_count == 5:
+                                #    sys.exit()
+
+
 if __name__ == '__main__':
     raw_reads = open(OUTPUT_FILE, "a")
     nanopore_model = load_model_values(NANOPORE_MODEL)
@@ -85,21 +106,18 @@ if __name__ == '__main__':
     files_count = 0
     len_dirs = ''
     files_per = ''
+    dirs_list = []
     for root, dirs, files in os.walk(DATASET):
         if len(dirs):
-            files_count = files_count + 1
-            len_dirs = str(len(dirs))
-            files_per = str(files_count) + '/' + len_dirs
-        file_count = 0
-        for file in files:
-            if file.endswith(".fast5"):
-                file_count = file_count + 1
-                file_path = root + '/' + file
-                print_all_raw_data(file_path)
-                if file_count == len(files):
-                    files_count = files_count + 1
-                    files_per = str(files_count) + '/' + len_dirs
-                print(str(file_count) + '/' + str(len(files)) + ' | ' + files_per)
-                # if files_count == 5:
-                #    sys.exit()
+            dirs_list = dirs
+    iterate_dirs(dirs_list)
+    # t1 = threading.Thread(target=iterate_dirs, args=dirs_list)
+    # t2 = threading.Thread(target=iterate_dirs, args=dirs_list[500:1000])
+    # t3 = threading.Thread(target=iterate_dirs, args=dirs_list[1000:-1])
+    # t1.start()
+    # t2.start()
+    # t3.start()
+    # t1.join()
+    # t2.join()
+    # t3.join()
     raw_reads.close()
