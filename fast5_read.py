@@ -80,7 +80,7 @@ def convert_to_pico(raw_data_arr, offset):
 
 
 def iterate_dirs(directs):
-    print(directs)
+    # print(directs)
     direc_count = 0
     for direc in directs:
         for fast5_files in os.walk(DATASET + direc):
