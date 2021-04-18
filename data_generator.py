@@ -5,7 +5,7 @@ from LocalConfigs import *
 class Data_Generator(Sequence):
   
   '''Initialization'''
-  def __init__(self, list_IDs, batch_size, dim=(64,501), n_classes=2, shuffle=True):
+  def __init__(self, list_IDs, batch_size, dim=(4000,501), n_classes=2, shuffle=True):
         
         self.dim = dim
         self.batch_size = batch_size
@@ -30,6 +30,7 @@ class Data_Generator(Sequence):
           print(ID)
           data = np.load(TRAIN_DIR + ID + '.npy')
           X = data[:, :-1]
+          X = np.expand_dims(X, axis=2)
     
           # Store class
           y = data[:, -1]

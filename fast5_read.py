@@ -48,7 +48,7 @@ def print_all_raw_data(fast5_file):
                 # print(print_line)
                 # raw_reads.write(print_line)
 
-    if fast5_file_count == 1000:
+    if fast5_file_count == 250:
         fast5_file_count = 0
         np_file_count = np_file_count + 1
         np_array = np_array.reshape(-1, 501)
