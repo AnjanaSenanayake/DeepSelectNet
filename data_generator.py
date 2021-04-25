@@ -27,7 +27,7 @@ class Data_Generator(Sequence):
       # Generate data
       for i, ID in enumerate(list_IDs_temp):
           # Store sample
-          print(ID)
+          # print(ID)
           data = np.load(TRAIN_DIR + ID + '.npy')
           X = data[:, :-1]
           X = np.expand_dims(X, axis=2)

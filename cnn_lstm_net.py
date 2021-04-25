@@ -24,20 +24,22 @@ test_partition = train_files[int(len(train_files) * train_split):]
 
 # create the model
 model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.Conv1D(filters=5, kernel_size=2, padding='same', activation='relu', input_shape=(500,1)))
+model.add(tf.keras.layers.Conv1D(filters=32, kernel_size=4, activation='relu', input_shape=(500,1)))
+model.add(Dropout(0.2))
 model.add(tf.keras.layers.MaxPooling1D(pool_size=2))
 model.add(tf.keras.layers.LSTM(10))
+model.add(Dropout(0.2))
 model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 # print(model.summary())
 
-train_generator = Data_Generator(train_partition, batch_size=3)
-test_generator = Data_Generator(test_partition, batch_size=3)
+train_generator = Data_Generator(train_partition, batch_size=128)
+test_generator = Data_Generator(test_partition, batch_size=64)
 model.fit_generator(generator=train_generator,
                   validation_data=test_generator,
-                  steps_per_epoch=3,
-                  epochs=5)
+                  steps_per_epoch=6,
+                  epochs=10)
 
 # Final evaluation of the model
-scores = model.evaluate(X_test, y_test, verbose=0)
-print("Accuracy: %.2f%%" % (scores[1]*100))
+#scores = model.evaluate(X_test, y_test, verbose=0)
+#print("Accuracy: %.2f%%" % (scores[1]*100))
