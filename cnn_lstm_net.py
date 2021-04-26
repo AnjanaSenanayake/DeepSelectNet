@@ -22,7 +22,7 @@ test_split = 0.3
 train_partition = train_files[0:int(len(train_files) * train_split)]
 test_partition = train_files[int(len(train_files) * train_split):]
 
-# create the model
+'''create the model'''
 model = tf.keras.models.Sequential()
 model.add(tf.keras.layers.Conv1D(filters=32, kernel_size=4, activation='relu', input_shape=(500,1)))
 model.add(Dropout(0.2))
@@ -31,8 +31,9 @@ model.add(tf.keras.layers.LSTM(10))
 model.add(Dropout(0.2))
 model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-# print(model.summary())
 
+
+'''training the model'''
 train_generator = Data_Generator(train_partition, batch_size=128)
 test_generator = Data_Generator(test_partition, batch_size=64)
 model.fit_generator(generator=train_generator,
@@ -40,6 +41,15 @@ model.fit_generator(generator=train_generator,
                   steps_per_epoch=6,
                   epochs=10)
 
-# Final evaluation of the model
-#scores = model.evaluate(X_test, y_test, verbose=0)
-#print("Accuracy: %.2f%%" % (scores[1]*100))
+
+'''evaluate the model'''
+scores = model.evaluate(test_partition, verbose=0)
+print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
+
+
+'''serialize model to JSON'''
+model_json = model.to_json()
+with open("model_" + str(scores[1]*100) + ".json", "w") as json_file:
+    json_file.write(model_json)
+model.save_weights("model.h5")
+print("Saved model to disk")
