@@ -40,7 +40,6 @@ def print_all_raw_data(fast5_file):
                     read_segment = raw_data[start_idx:start_idx + 500]
                     read_segment_converted = convert_to_pico(read_segment, fh5.channel_meta['offset'])
                     np_array_temp = np.asarray(read_segment_converted, dtype=np.float32)
-                    np_noise_array = np.append(np_noise_array, np_array_temp)
                     np_array_temp = np.append(np_array_temp, 1)
                     np_array = np.append(np_array, np_array_temp, axis=0)
 

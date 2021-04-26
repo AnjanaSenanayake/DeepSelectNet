@@ -15,12 +15,10 @@ RANGE = 1402.882
 fast5_file_count = 0
 np_file_count = 0
 np_array = []
-np_noise_array = []
 
 
 def print_all_raw_data(fast5_file):
     global np_array
-    global np_noise_array
     global fast5_file_count
     global np_file_count
     with get_fast5_file(fast5_file, mode="r") as f5:
@@ -36,7 +34,6 @@ def print_all_raw_data(fast5_file):
                     read_segment = raw_data[start_idx:start_idx + 500]
                     read_segment_converted = convert_to_pico(read_segment, fh5.channel_meta['offset'])
                     np_array_temp = np.asarray(read_segment_converted, dtype=np.float32)
-                    np_noise_array = np.append(np_noise_array, np_array_temp)
                     np_array_temp = np.append(np_array_temp, 1)
                     np_array = np.append(np_array, np_array_temp, axis=0)
 
