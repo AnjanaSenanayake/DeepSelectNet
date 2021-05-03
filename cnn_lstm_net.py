@@ -43,7 +43,7 @@ model.fit_generator(generator=train_generator,
 
 
 '''evaluate the model'''
-scores = model.evaluate(test_partition, verbose=0)
+scores = model.evaluate(test_generator, verbose=0)
 print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
 

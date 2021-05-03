@@ -1,12 +1,12 @@
 import os
 from LocalConfigs import *
 
-if os.path.exists(NPY_LIST_FILE):
-    os.remove(NPY_LIST_FILE)
+if os.path.exists(VAL_NPY_LIST_FILE):
+    os.remove(VAL_NPY_LIST_FILE)
 
-npy_list_file = open(NPY_LIST_FILE, "a")
+npy_list_file = open(VAL_NPY_LIST_FILE, "a")
 
-for root, dirs, files in os.walk(TRAIN_DIR):
+for root, dirs, files in os.walk(VALIDATION_DIR):
     for file in files:
         if file.endswith(".npy"):
             npy_list_file.write(file.split('.npy')[0] + '\n')
