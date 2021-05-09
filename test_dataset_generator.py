@@ -23,6 +23,7 @@ def print_all_raw_data(fast5_file):
     global np_file_count
     with get_fast5_file(fast5_file, mode="r") as f5:
         fast5_file_count = fast5_file_count + 1
+        print(fast5_file)
         with Fast5(fast5_file) as fh5:
             for read in f5.get_reads():
                 raw_data = read.get_raw_data()
@@ -59,7 +60,7 @@ def convert_to_pico(raw_data_arr, offset):
     return arr
 
 
-def iterate_dirs(directs):
+def iterate_dirs_and_read_fast5(directs):
     direc_count = 0
     for direc in directs:
         for fast5_files in os.walk(VALIDATION_DATASET + direc):
@@ -75,12 +76,24 @@ def iterate_dirs(directs):
                                 print_all_raw_data(VALIDATION_DATASET + '/' + direc + '/' + fi)
 
 
+def read_fast5(files):
+    fast5_count = 0
+    for file in files:
+        if file.endswith(".fast5"):
+            fast5_count = fast5_count + 1
+            print(str(fast5_count) + '/' + str(len(files)))
+            print_all_raw_data(VALIDATION_DATASET + file)
+
+
 if __name__ == '__main__':
     files_count = 0
     len_dirs = ''
     files_per = ''
     dirs_list = []
     for root, dirs, files in os.walk(VALIDATION_DATASET):
-        if len(dirs):
-            dirs_list = dirs
-    iterate_dirs(dirs_list)
+        print(dirs)
+        if len(dirs)>0:
+            iterate_dirs_and_read_fast5(dirs)
+        else:
+            read_fast5(files)
+                
