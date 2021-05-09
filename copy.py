@@ -5,7 +5,7 @@ import os
 file_count = 0
 
 
-if len(sys.argv)>=3 sys.argv[3] == '-i':
+if len(sys.argv)>=3 and sys.argv[3] == '-i':
 	for root, dirs, files in os.walk(sys.argv[1]):
 		for file in files:
 			if sys.argv[4] == '-ext':
