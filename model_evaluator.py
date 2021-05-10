@@ -16,6 +16,16 @@ with open(sys.argv[1]) as f:
 for line in content:
     test_files.append(line.rstrip('\n'))
 
+'''create the model'''
+model = tf.keras.models.Sequential()
+model.add(tf.keras.layers.Conv1D(filters=32, kernel_size=4, activation='relu', input_shape=(500,1)))
+model.add(Dropout(0.2))
+model.add(tf.keras.layers.MaxPooling1D(pool_size=2))
+model.add(tf.keras.layers.LSTM(10))
+model.add(Dropout(0.2))
+model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
 '''evaluate the model'''
 test_generator = Data_Generator(test_files, batch_size=64)
 scores = model.evaluate(test_generator, verbose=0)
