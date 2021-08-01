@@ -1,0 +1,103 @@
+2021-05-25 11:52:59.224495: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX
+2021-05-25 11:52:59.258430: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 2593575000 Hz
+2021-05-25 11:52:59.263671: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55b1f1aeae60 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2021-05-25 11:52:59.263712: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2021-05-25 11:52:59.263936: I tensorflow/core/common_runtime/process_util.cc:147] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.
+WARNING:tensorflow:From ../../nets/model_evaluator.py:19: Model.evaluate_generator (from tensorflow.python.keras.engine.training) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use Model.evaluate, which supports generators.
+2021-05-25 12:08:47.251574: W tensorflow/core/framework/op_kernel.cc:1741] Unknown: UnboundLocalError: local variable 'x' referenced before assignment
+Traceback (most recent call last):
+
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/ops/script_ops.py", line 243, in __call__
+    ret = func(*args)
+
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/autograph/impl/api.py", line 309, in wrapper
+    return func(*args, **kwargs)
+
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/data/ops/dataset_ops.py", line 785, in generator_py_func
+    values = next(generator_state.get_iterator(iterator_id))
+
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/keras/engine/data_adapter.py", line 801, in wrapped_generator
+    for data in generator_fn():
+
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/keras/engine/data_adapter.py", line 932, in generator_fn
+    yield x[i]
+
+  File "/home/e14317/Workspace/Mphil/nets/datagenerator.py", line 61, in __getitem__
+    x, y = self.__data_generation(list_ids_temp)
+
+  File "/home/e14317/Workspace/Mphil/nets/datagenerator.py", line 38, in __data_generation
+    return x, y
+
+UnboundLocalError: local variable 'x' referenced before assignment
+
+
+Traceback (most recent call last):
+  File "../../nets/model_evaluator.py", line 26, in <module>
+    main()
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/click/core.py", line 829, in __call__
+    return self.main(*args, **kwargs)
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/click/core.py", line 782, in main
+    rv = self.invoke(ctx)
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/click/core.py", line 1066, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/click/core.py", line 610, in invoke
+    return callback(*args, **kwargs)
+  File "../../nets/model_evaluator.py", line 19, in main
+    scores = model.evaluate_generator(test_generator, verbose=2)
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/util/deprecation.py", line 324, in new_func
+    return func(*args, **kwargs)
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/keras/engine/training.py", line 1500, in evaluate_generator
+    return self.evaluate(
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/keras/engine/training.py", line 66, in _method_wrapper
+    return method(self, *args, **kwargs)
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/keras/engine/training.py", line 1081, in evaluate
+    tmp_logs = test_function(iterator)
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/eager/def_function.py", line 580, in __call__
+    result = self._call(*args, **kwds)
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/eager/def_function.py", line 611, in _call
+    return self._stateless_fn(*args, **kwds)  # pylint: disable=not-callable
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 2420, in __call__
+    return graph_function._filtered_call(args, kwargs)  # pylint: disable=protected-access
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 1661, in _filtered_call
+    return self._call_flat(
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 1745, in _call_flat
+    return self._build_call_outputs(self._inference_function.call(
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 593, in call
+    outputs = execute.execute(
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/eager/execute.py", line 59, in quick_execute
+    tensors = pywrap_tfe.TFE_Py_Execute(ctx._handle, device_name, op_name,
+tensorflow.python.framework.errors_impl.UnknownError:  UnboundLocalError: local variable 'x' referenced before assignment
+Traceback (most recent call last):
+
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/ops/script_ops.py", line 243, in __call__
+    ret = func(*args)
+
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/autograph/impl/api.py", line 309, in wrapper
+    return func(*args, **kwargs)
+
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/data/ops/dataset_ops.py", line 785, in generator_py_func
+    values = next(generator_state.get_iterator(iterator_id))
+
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/keras/engine/data_adapter.py", line 801, in wrapped_generator
+    for data in generator_fn():
+
+  File "/home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/keras/engine/data_adapter.py", line 932, in generator_fn
+    yield x[i]
+
+  File "/home/e14317/Workspace/Mphil/nets/datagenerator.py", line 61, in __getitem__
+    x, y = self.__data_generation(list_ids_temp)
+
+  File "/home/e14317/Workspace/Mphil/nets/datagenerator.py", line 38, in __data_generation
+    return x, y
+
+UnboundLocalError: local variable 'x' referenced before assignment
+
+
+	 [[{{node PyFunc}}]]
+	 [[IteratorGetNext]] [Op:__inference_test_function_8644]
+
+Function call stack:
+test_function
+
