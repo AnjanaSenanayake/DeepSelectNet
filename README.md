@@ -31,34 +31,47 @@ SquiggleNet Plus is an improved version of the original (https://genomebiology.b
 * Open the terminal in the directory where you want to setup the virtual environment.
 * Use the following command to create a python3 virtual environment named "env"
 
-```python3 -m venv env```
+```
+python3 -m venv env
+```
 
 * Use the following command to activate the virtual environment created.
 
-```source env/bin/activate```
+```
+source env/bin/activate
+```
 
 * Use the following command to leave the virtual environment.
 
-```deactivate```
+```
+deactivate
+```
 
 > Installing the list of required dependencies within the created virtual environment.
 
 * Execute the following command to install the list of required dependencies from ```requirements.txt``` file
 
-```pip3 install -r requirements.txt```
-
+```
+pip3 install -r requirements.txt
+```
 
 ## Example
 
 * Running the ```main.py``` script with the following arguments will train 3 agents in a ```simple_line``` environment and dump the results into a new directory named 0 in within marlsave directory.
 
-```python3 main.py --env-name simple_line --num-agents 3 --save-dir 0```
+```
+python3 main.py --env-name simple_line --num-agents 3 --save-dir 0
+```
 
 * Please refer ```arguments.py``` for a complete list of arguments.
 * TIP: Redirecting the both stdout and stderr into two separate files would make it easier to debug and to track outputs. In the following example, the standard output stream is redirected to log.txt file while, standard error stream is redirected to log.err.txt file. You could casually ```cat``` the log.txt to see current status.
 
-```python3 main.py --env-name simple_line --num-agents 3 --save-dir 0 > log.txt 2> log.err.txt  ``` 
+```
+python3 main.py --env-name simple_line --num-agents 3 --save-dir 0 > log.txt 2> log.err.txt 
+``` 
 
 To get cleaner version of the output from the log.txt, you could use following command. This will produce the new file ```filtered.txt```
 
-```cat log.txt | grep "Num success" > filtered.txt```
+```
+cat log.txt | grep "Num success" > filtered.txt
+```
