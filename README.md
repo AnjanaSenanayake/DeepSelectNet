@@ -7,7 +7,7 @@ SquiggleNet Plus is an improved version of the original (https://genomebiology.b
 ## Scripts
 
 #### 1. arguments.py
-> The input arguments define the algorithim are collected
+>The input arguments define the algorithim are collected
 
 #### 2. main.py
 >The algorithm is run 
