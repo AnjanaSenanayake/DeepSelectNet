@@ -33,7 +33,7 @@ OUTPUT = 'predicts.txt'
 @click.option('--label', '-lb', default=1, help='label of the train set', type=int)
 @click.option('--mad', '-mad', default=3, help='mad value', type=int)
 @click.option('--repeated_norm', '-rep', default=False, help='repeated normalization or not', type=bool)
-@click.option('--output', '-o', help='npy output directory path', type=click.Path(exists=False))
+@click.option('--output', '-o', help='output directory path', type=click.Path(exists=False))
 def main(saved_model, fast5_dir, cutoff, subsample_size, sampling_coefficient, batch, pico, label, mad, repeated_norm,
          output):
     global CUTOFF, SUB_SAMPLE_SIZE, SAMPLING_C0, BATCH, IS_PICO, LABEL, OUTPUT, MAD_SCORE, REPEATED

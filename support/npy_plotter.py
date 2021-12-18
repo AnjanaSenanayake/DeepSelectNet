@@ -91,7 +91,7 @@ def boxplot(reads):
 
 
 @click.command()
-@click.option('--numpy', '-np', help='path to fast5 directory')
+@click.option('--numpy', '-np', help='path to npy directory')
 @click.option('--mad', '-mad', default=3, help='mad value', type=int)
 @click.option('--repeated_norm', '-rep', default=False, help='repeated normalization or not', type=bool)
 def main(numpy, mad, repeated_norm):

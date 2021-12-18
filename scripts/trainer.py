@@ -154,7 +154,7 @@ def draw_plots(epochs, k):
 @click.option('--loss_func', '-lf', default='bc', help='The loss function of the model[bc, cc, scc], default=bc',
               type=str)
 @click.option('--split_ratio', '-s', default=0.75, help='The datasets split ratio, default=0.75', type=float)
-@click.option('--is_occ', '-occ', default=True, help='Perform one class classification, default=True', type=bool)
+@click.option('--is_occ', '-occ', default=False, help='Perform one class classification, default=True', type=bool)
 @click.option('--is_one_hot', '-oh', default=False, help='One hot encode labels, default=False', type=bool)
 @click.option('--folds', '-k', default=10, help='k fold value, default=10', type=int)
 @click.option('--epochs', '-e', default=10, help='Number of epochs, default=10', type=int)

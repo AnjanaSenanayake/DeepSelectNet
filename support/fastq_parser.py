@@ -8,8 +8,8 @@ import click
 
 @click.command()
 @click.option('--fastq', '-fq', help='The source file path', type=click.Path(exists=True))
-@click.option('--shortner', '-shrt', default=False, help='Fastq shortner(default False)', type=bool)
-@click.option('--concat', '-cat', default=False, help='Fastq shortner(default False)', type=bool)
+@click.option('--shortner', '-shrt', default=False, help='Fastq shortner(default=True)', type=bool)
+@click.option('--concat', '-cat', default=False, help='Fastq shortner(default=False)', type=bool)
 def main(fastq, shortner, concat):
     # Create temp file
     fh, abs_path = mkstemp()

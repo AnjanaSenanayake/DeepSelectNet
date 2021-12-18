@@ -130,7 +130,7 @@ def read_fast5s(root, files):
 @click.option('--fast5_dir', '-f5', help='path to fast5 directory', type=click.Path(exists=True))
 @click.option('--cutoff', '-c', default=1500, help='read signal cutoff value')
 @click.option('--subsample_size', '-sz', default=1000, help='read signal sample size')
-@click.option('--sampling_coefficient', '-sco', default=2, help='subsampling coefficient', type=int)
+@click.option('--sampling_coefficient', '-sco', default=1, help='subsampling coefficient', type=int)
 @click.option('--batch', '-b', default=1000, help='number of fast5 reads for a npy array')
 @click.option('--pico', '-pico', default=True, help='enable/disable pico conversion', type=bool)
 @click.option('--label', '-lb', default=1, help='label of the train set', type=int)
