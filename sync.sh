@@ -6,7 +6,7 @@ DOWN="down"
 UP="up"
 
 if [ "$VAR2" = "$DOWN" ]; then
-	rsync -auzr -P e14317@"$VAR1".ce.pdn.ac.lk:~/Workspace/Mphil /home/anjana/Documents/WorkSpace/
+	rsync -auzr -P e14317@"$VAR1".ce.pdn.ac.lk:~/Workspace/SquiggleNetPlus /home/anjana/WorkSpace/
 elif [ "$VAR2" = "$UP" ]; then
-	rsync -auzpr -P /home/anjana/Documents/WorkSpace/Mphil e14317@"$VAR1".ce.pdn.ac.lk:~/Workspace/
+	rsync -auzpr -P /home/anjana/WorkSpace/SquiggleNetPlus e14317@"$VAR1".ce.pdn.ac.lk:~/Workspace/
 fi

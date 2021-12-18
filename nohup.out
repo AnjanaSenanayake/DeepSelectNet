@@ -1,383 +1,0 @@
-2021-05-30 23:58:42.234872: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX
-2021-05-30 23:58:42.266394: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 2593575000 Hz
-2021-05-30 23:58:42.268732: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5596ea829b10 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-2021-05-30 23:58:42.268833: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-2021-05-30 23:58:42.269034: I tensorflow/core/common_runtime/process_util.cc:147] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.
-WARNING:tensorflow:From nets/cnn_lstm_net.py:58: Model.fit_generator (from tensorflow.python.keras.engine.training) is deprecated and will be removed in a future version.
-Instructions for updating:
-Please use Model.fit, which supports generators.
-Batch 0 is loaded. 
-Batch size 128
-Epoch 1/10
-Batch 2 is loaded. 
-Batch size 128
-1/6 [====>.........................] - ETA: 0s - loss: 0.6648 - accuracy: 0.6731 - recall_m: 0.7106 - precision_m: 0.6610 - f1_m: 0.6849Batch 0 is loaded. 
-Batch size 128
-2/6 [=========>....................] - ETA: 1:16 - loss: 0.6587 - accuracy: 0.6763 - recall_m: 0.7120 - precision_m: 0.6646 - f1_m: 0.6875Batch 3 is loaded. 
-Batch size 128
-3/6 [==============>...............] - ETA: 1:14 - loss: 0.6522 - accuracy: 0.6798 - recall_m: 0.7137 - precision_m: 0.6684 - f1_m: 0.6903Batch 5 is loaded. 
-Batch size 128
-4/6 [===================>..........] - ETA: 56s - loss: 0.6449 - accuracy: 0.6847 - recall_m: 0.7152 - precision_m: 0.6743 - f1_m: 0.6941 Batch 1 is loaded. 
-Batch size 128
-5/6 [========================>.....] - ETA: 30s - loss: 0.6331 - accuracy: 0.6927 - recall_m: 0.7194 - precision_m: 0.6833 - f1_m: 0.7008Batch 4 is loaded. 
-Batch size 128
-6/6 [==============================] - ETA: 0s - loss: 0.6259 - accuracy: 0.6978 - recall_m: 0.7235 - precision_m: 0.6885 - f1_m: 0.7055 Batch 0 is loaded. 
-Batch size 64
-Batch 0 is loaded. 
-Batch size 64
-Batch 1 is loaded. 
-Batch size 64
-Batch 2 is loaded. 
-Batch size 64
-Batch 3 is loaded. 
-Batch size 64
-Batch 4 is loaded. 
-Batch size 64
-Batch 5 is loaded. 
-Batch size 64
-Batch 6 is loaded. 
-Batch size 64
-Batch 7 is loaded. 
-Batch size 64
-6/6 [==============================] - 354s 59s/step - loss: 0.6259 - accuracy: 0.6978 - recall_m: 0.7235 - precision_m: 0.6885 - f1_m: 0.7055 - val_loss: 0.6759 - val_accuracy: 0.5173 - val_recall_m: 0.0347 - val_precision_m: 1.0000 - val_f1_m: 0.0670
-Epoch 2/10
-Batch 1 is loaded. 
-Batch size 128
-1/6 [====>.........................] - ETA: 0s - loss: 0.5655 - accuracy: 0.7444 - recall_m: 0.7589 - precision_m: 0.7376 - f1_m: 0.7481Batch 0 is loaded. 
-Batch size 128
-2/6 [=========>....................] - ETA: 1:11 - loss: 0.5634 - accuracy: 0.7458 - recall_m: 0.7581 - precision_m: 0.7399 - f1_m: 0.7489Batch 4 is loaded. 
-Batch size 128
-3/6 [==============>...............] - ETA: 1:12 - loss: 0.5540 - accuracy: 0.7535 - recall_m: 0.7635 - precision_m: 0.7487 - f1_m: 0.7560Batch 2 is loaded. 
-Batch size 128
-4/6 [===================>..........] - ETA: 55s - loss: 0.5489 - accuracy: 0.7564 - recall_m: 0.7654 - precision_m: 0.7519 - f1_m: 0.7586 Batch 5 is loaded. 
-Batch size 128
-5/6 [========================>.....] - ETA: 28s - loss: 0.5415 - accuracy: 0.7607 - recall_m: 0.7685 - precision_m: 0.7568 - f1_m: 0.7626Batch 3 is loaded. 
-Batch size 128
-6/6 [==============================] - ETA: 0s - loss: 0.5359 - accuracy: 0.7651 - recall_m: 0.7722 - precision_m: 0.7615 - f1_m: 0.7668 Batch 0 is loaded. 
-Batch size 64
-Batch 0 is loaded. 
-Batch size 64
-Batch 1 is loaded. 
-Batch size 64
-Batch 2 is loaded. 
-Batch size 64
-Batch 3 is loaded. 
-Batch size 64
-Batch 4 is loaded. 
-Batch size 64
-Batch 5 is loaded. 
-Batch size 64
-Batch 6 is loaded. 
-Batch size 64
-Batch 7 is loaded. 
-Batch size 64
-6/6 [==============================] - 334s 56s/step - loss: 0.5359 - accuracy: 0.7651 - recall_m: 0.7722 - precision_m: 0.7615 - f1_m: 0.7668 - val_loss: 0.6688 - val_accuracy: 0.5109 - val_recall_m: 0.0218 - val_precision_m: 1.0000 - val_f1_m: 0.0427
-Epoch 3/10
-Batch 0 is loaded. 
-Batch size 128
-1/6 [====>.........................] - ETA: 0s - loss: 0.4898 - accuracy: 0.7983 - recall_m: 0.7929 - precision_m: 0.8015 - f1_m: 0.7972Batch 2 is loaded. 
-Batch size 128
-2/6 [=========>....................] - ETA: 1:10 - loss: 0.4817 - accuracy: 0.8014 - recall_m: 0.7956 - precision_m: 0.8050 - f1_m: 0.8002Batch 4 is loaded. 
-Batch size 128
-3/6 [==============>...............] - ETA: 1:10 - loss: 0.4756 - accuracy: 0.8056 - recall_m: 0.8011 - precision_m: 0.8084 - f1_m: 0.8048Batch 5 is loaded. 
-Batch size 128
-4/6 [===================>..........] - ETA: 55s - loss: 0.4674 - accuracy: 0.8115 - recall_m: 0.8071 - precision_m: 0.8143 - f1_m: 0.8107 Batch 3 is loaded. 
-Batch size 128
-5/6 [========================>.....] - ETA: 28s - loss: 0.4610 - accuracy: 0.8161 - recall_m: 0.8102 - precision_m: 0.8199 - f1_m: 0.8150Batch 1 is loaded. 
-Batch size 128
-6/6 [==============================] - ETA: 0s - loss: 0.4549 - accuracy: 0.8205 - recall_m: 0.8140 - precision_m: 0.8248 - f1_m: 0.8193 Batch 0 is loaded. 
-Batch size 64
-Batch 0 is loaded. 
-Batch size 64
-Batch 1 is loaded. 
-Batch size 64
-Batch 2 is loaded. 
-Batch size 64
-Batch 3 is loaded. 
-Batch size 64
-Batch 4 is loaded. 
-Batch size 64
-Batch 5 is loaded. 
-Batch size 64
-Batch 6 is loaded. 
-Batch size 64
-Batch 7 is loaded. 
-Batch size 64
-6/6 [==============================] - 340s 57s/step - loss: 0.4549 - accuracy: 0.8205 - recall_m: 0.8140 - precision_m: 0.8248 - f1_m: 0.8193 - val_loss: 0.6613 - val_accuracy: 0.6013 - val_recall_m: 0.2026 - val_precision_m: 1.0000 - val_f1_m: 0.3368
-Epoch 4/10
-Batch 0 is loaded. 
-Batch size 128
-1/6 [====>.........................] - ETA: 0s - loss: 0.4188 - accuracy: 0.8451 - recall_m: 0.8347 - precision_m: 0.8523 - f1_m: 0.8434Batch 1 is loaded. 
-Batch size 128
-2/6 [=========>....................] - ETA: 1:18 - loss: 0.4134 - accuracy: 0.8497 - recall_m: 0.8387 - precision_m: 0.8575 - f1_m: 0.8480Batch 3 is loaded. 
-Batch size 128
-3/6 [==============>...............] - ETA: 1:13 - loss: 0.4094 - accuracy: 0.8523 - recall_m: 0.8407 - precision_m: 0.8606 - f1_m: 0.8505Batch 5 is loaded. 
-Batch size 128
-4/6 [===================>..........] - ETA: 56s - loss: 0.4020 - accuracy: 0.8576 - recall_m: 0.8453 - precision_m: 0.8667 - f1_m: 0.8558 Batch 4 is loaded. 
-Batch size 128
-5/6 [========================>.....] - ETA: 30s - loss: 0.3980 - accuracy: 0.8599 - recall_m: 0.8474 - precision_m: 0.8691 - f1_m: 0.8581Batch 2 is loaded. 
-Batch size 128
-6/6 [==============================] - ETA: 0s - loss: 0.3919 - accuracy: 0.8643 - recall_m: 0.8522 - precision_m: 0.8734 - f1_m: 0.8627 Batch 0 is loaded. 
-Batch size 64
-Batch 0 is loaded. 
-Batch size 64
-Batch 1 is loaded. 
-Batch size 64
-Batch 2 is loaded. 
-Batch size 64
-Batch 3 is loaded. 
-Batch size 64
-Batch 4 is loaded. 
-Batch size 64
-Batch 5 is loaded. 
-Batch size 64
-Batch 6 is loaded. 
-Batch size 64
-Batch 7 is loaded. 
-Batch size 64
-6/6 [==============================] - 345s 58s/step - loss: 0.3919 - accuracy: 0.8643 - recall_m: 0.8522 - precision_m: 0.8734 - f1_m: 0.8627 - val_loss: 0.6514 - val_accuracy: 0.6767 - val_recall_m: 0.3533 - val_precision_m: 1.0000 - val_f1_m: 0.5221
-Epoch 5/10
-Batch 2 is loaded. 
-Batch size 128
-1/6 [====>.........................] - ETA: 0s - loss: 0.3501 - accuracy: 0.8885 - recall_m: 0.8773 - precision_m: 0.8974 - f1_m: 0.8872Batch 4 is loaded. 
-Batch size 128
-2/6 [=========>....................] - ETA: 1:18 - loss: 0.3481 - accuracy: 0.8917 - recall_m: 0.8828 - precision_m: 0.8987 - f1_m: 0.8907Batch 5 is loaded. 
-Batch size 128
-3/6 [==============>...............] - ETA: 1:13 - loss: 0.3438 - accuracy: 0.8951 - recall_m: 0.8843 - precision_m: 0.9039 - f1_m: 0.8940Batch 0 is loaded. 
-Batch size 128
-4/6 [===================>..........] - ETA: 57s - loss: 0.3393 - accuracy: 0.8979 - recall_m: 0.8878 - precision_m: 0.9060 - f1_m: 0.8968 Batch 3 is loaded. 
-Batch size 128
-5/6 [========================>.....] - ETA: 29s - loss: 0.3355 - accuracy: 0.9004 - recall_m: 0.8903 - precision_m: 0.9087 - f1_m: 0.8994Batch 1 is loaded. 
-Batch size 128
-6/6 [==============================] - ETA: 0s - loss: 0.3310 - accuracy: 0.9031 - recall_m: 0.8930 - precision_m: 0.9113 - f1_m: 0.9021 Batch 0 is loaded. 
-Batch size 64
-Batch 0 is loaded. 
-Batch size 64
-Batch 1 is loaded. 
-Batch size 64
-Batch 2 is loaded. 
-Batch size 64
-Batch 3 is loaded. 
-Batch size 64
-Batch 4 is loaded. 
-Batch size 64
-Batch 5 is loaded. 
-Batch size 64
-Batch 6 is loaded. 
-Batch size 64
-Batch 7 is loaded. 
-Batch size 64
-6/6 [==============================] - 346s 58s/step - loss: 0.3310 - accuracy: 0.9031 - recall_m: 0.8930 - precision_m: 0.9113 - f1_m: 0.9021 - val_loss: 0.6409 - val_accuracy: 0.7391 - val_recall_m: 0.4782 - val_precision_m: 1.0000 - val_f1_m: 0.6470
-Epoch 6/10
-Batch 0 is loaded. 
-Batch size 128
-1/6 [====>.........................] - ETA: 0s - loss: 0.2990 - accuracy: 0.9214 - recall_m: 0.9134 - precision_m: 0.9282 - f1_m: 0.9207Batch 5 is loaded. 
-Batch size 128
-2/6 [=========>....................] - ETA: 1:13 - loss: 0.2984 - accuracy: 0.9215 - recall_m: 0.9129 - precision_m: 0.9289 - f1_m: 0.9208Batch 3 is loaded. 
-Batch size 128
-3/6 [==============>...............] - ETA: 1:12 - loss: 0.2941 - accuracy: 0.9250 - recall_m: 0.9155 - precision_m: 0.9332 - f1_m: 0.9242Batch 1 is loaded. 
-Batch size 128
-4/6 [===================>..........] - ETA: 56s - loss: 0.2903 - accuracy: 0.9270 - recall_m: 0.9175 - precision_m: 0.9353 - f1_m: 0.9263 Batch 4 is loaded. 
-Batch size 128
-5/6 [========================>.....] - ETA: 29s - loss: 0.2854 - accuracy: 0.9300 - recall_m: 0.9210 - precision_m: 0.9378 - f1_m: 0.9293Batch 2 is loaded. 
-Batch size 128
-6/6 [==============================] - ETA: 0s - loss: 0.2825 - accuracy: 0.9319 - recall_m: 0.9225 - precision_m: 0.9401 - f1_m: 0.9312 Batch 0 is loaded. 
-Batch size 64
-Batch 0 is loaded. 
-Batch size 64
-Batch 1 is loaded. 
-Batch size 64
-Batch 2 is loaded. 
-Batch size 64
-Batch 3 is loaded. 
-Batch size 64
-Batch 4 is loaded. 
-Batch size 64
-Batch 5 is loaded. 
-Batch size 64
-Batch 6 is loaded. 
-Batch size 64
-Batch 7 is loaded. 
-Batch size 64
-6/6 [==============================] - 345s 57s/step - loss: 0.2825 - accuracy: 0.9319 - recall_m: 0.9225 - precision_m: 0.9401 - f1_m: 0.9312 - val_loss: 0.6282 - val_accuracy: 0.8075 - val_recall_m: 0.6150 - val_precision_m: 1.0000 - val_f1_m: 0.7615
-Epoch 7/10
-Batch 3 is loaded. 
-Batch size 128
-1/6 [====>.........................] - ETA: 0s - loss: 0.2592 - accuracy: 0.9463 - recall_m: 0.9391 - precision_m: 0.9528 - f1_m: 0.9459Batch 5 is loaded. 
-Batch size 128
-2/6 [=========>....................] - ETA: 1:22 - loss: 0.2572 - accuracy: 0.9452 - recall_m: 0.9367 - precision_m: 0.9529 - f1_m: 0.9447Batch 0 is loaded. 
-Batch size 128
-3/6 [==============>...............] - ETA: 1:17 - loss: 0.2533 - accuracy: 0.9480 - recall_m: 0.9405 - precision_m: 0.9549 - f1_m: 0.9476Batch 4 is loaded. 
-Batch size 128
-4/6 [===================>..........] - ETA: 56s - loss: 0.2502 - accuracy: 0.9500 - recall_m: 0.9424 - precision_m: 0.9570 - f1_m: 0.9496 Batch 2 is loaded. 
-Batch size 128
-5/6 [========================>.....] - ETA: 30s - loss: 0.2473 - accuracy: 0.9514 - recall_m: 0.9436 - precision_m: 0.9585 - f1_m: 0.9510Batch 1 is loaded. 
-Batch size 128
-6/6 [==============================] - ETA: 0s - loss: 0.2444 - accuracy: 0.9527 - recall_m: 0.9445 - precision_m: 0.9602 - f1_m: 0.9523 Batch 0 is loaded. 
-Batch size 64
-Batch 0 is loaded. 
-Batch size 64
-Batch 1 is loaded. 
-Batch size 64
-Batch 2 is loaded. 
-Batch size 64
-Batch 3 is loaded. 
-Batch size 64
-Batch 4 is loaded. 
-Batch size 64
-Batch 5 is loaded. 
-Batch size 64
-Batch 6 is loaded. 
-Batch size 64
-Batch 7 is loaded. 
-Batch size 64
-6/6 [==============================] - 351s 58s/step - loss: 0.2444 - accuracy: 0.9527 - recall_m: 0.9445 - precision_m: 0.9602 - f1_m: 0.9523 - val_loss: 0.6132 - val_accuracy: 0.8760 - val_recall_m: 0.7520 - val_precision_m: 1.0000 - val_f1_m: 0.8584
-Epoch 8/10
-Batch 0 is loaded. 
-Batch size 128
-1/6 [====>.........................] - ETA: 0s - loss: 0.2295 - accuracy: 0.9592 - recall_m: 0.9509 - precision_m: 0.9671 - f1_m: 0.9589Batch 5 is loaded. 
-Batch size 128
-2/6 [=========>....................] - ETA: 1:12 - loss: 0.2255 - accuracy: 0.9612 - recall_m: 0.9536 - precision_m: 0.9684 - f1_m: 0.9609Batch 4 is loaded. 
-Batch size 128
-3/6 [==============>...............] - ETA: 1:12 - loss: 0.2240 - accuracy: 0.9610 - recall_m: 0.9529 - precision_m: 0.9685 - f1_m: 0.9606Batch 2 is loaded. 
-Batch size 128
-4/6 [===================>..........] - ETA: 55s - loss: 0.2210 - accuracy: 0.9622 - recall_m: 0.9539 - precision_m: 0.9699 - f1_m: 0.9618 Batch 1 is loaded. 
-Batch size 128
-5/6 [========================>.....] - ETA: 28s - loss: 0.2186 - accuracy: 0.9633 - recall_m: 0.9551 - precision_m: 0.9710 - f1_m: 0.9630Batch 3 is loaded. 
-Batch size 128
-6/6 [==============================] - ETA: 0s - loss: 0.2162 - accuracy: 0.9643 - recall_m: 0.9560 - precision_m: 0.9721 - f1_m: 0.9640 Batch 0 is loaded. 
-Batch size 64
-Batch 0 is loaded. 
-Batch size 64
-Batch 1 is loaded. 
-Batch size 64
-Batch 2 is loaded. 
-Batch size 64
-Batch 3 is loaded. 
-Batch size 64
-Batch 4 is loaded. 
-Batch size 64
-Batch 5 is loaded. 
-Batch size 64
-Batch 6 is loaded. 
-Batch size 64
-Batch 7 is loaded. 
-Batch size 64
-6/6 [==============================] - 341s 57s/step - loss: 0.2162 - accuracy: 0.9643 - recall_m: 0.9560 - precision_m: 0.9721 - f1_m: 0.9640 - val_loss: 0.5949 - val_accuracy: 0.9400 - val_recall_m: 0.8800 - val_precision_m: 1.0000 - val_f1_m: 0.9362
-Epoch 9/10
-Batch 4 is loaded. 
-Batch size 128
-1/6 [====>.........................] - ETA: 0s - loss: 0.2031 - accuracy: 0.9712 - recall_m: 0.9619 - precision_m: 0.9801 - f1_m: 0.9709Batch 5 is loaded. 
-Batch size 128
-2/6 [=========>....................] - ETA: 1:14 - loss: 0.1989 - accuracy: 0.9718 - recall_m: 0.9634 - precision_m: 0.9797 - f1_m: 0.9715Batch 3 is loaded. 
-Batch size 128
-3/6 [==============>...............] - ETA: 1:13 - loss: 0.1960 - accuracy: 0.9736 - recall_m: 0.9651 - precision_m: 0.9818 - f1_m: 0.9734Batch 0 is loaded. 
-Batch size 128
-4/6 [===================>..........] - ETA: 56s - loss: 0.1932 - accuracy: 0.9747 - recall_m: 0.9658 - precision_m: 0.9832 - f1_m: 0.9744 Batch 2 is loaded. 
-Batch size 128
-5/6 [========================>.....] - ETA: 29s - loss: 0.1901 - accuracy: 0.9757 - recall_m: 0.9668 - precision_m: 0.9842 - f1_m: 0.9754Batch 1 is loaded. 
-Batch size 128
-6/6 [==============================] - ETA: 0s - loss: 0.1876 - accuracy: 0.9764 - recall_m: 0.9676 - precision_m: 0.9849 - f1_m: 0.9762 Batch 0 is loaded. 
-Batch size 64
-Batch 0 is loaded. 
-Batch size 64
-Batch 1 is loaded. 
-Batch size 64
-Batch 2 is loaded. 
-Batch size 64
-Batch 3 is loaded. 
-Batch size 64
-Batch 4 is loaded. 
-Batch size 64
-Batch 5 is loaded. 
-Batch size 64
-Batch 6 is loaded. 
-Batch size 64
-Batch 7 is loaded. 
-Batch size 64
-6/6 [==============================] - 342s 57s/step - loss: 0.1876 - accuracy: 0.9764 - recall_m: 0.9676 - precision_m: 0.9849 - f1_m: 0.9762 - val_loss: 0.5736 - val_accuracy: 0.9793 - val_recall_m: 0.9585 - val_precision_m: 1.0000 - val_f1_m: 0.9788
-Epoch 10/10
-Batch 0 is loaded. 
-Batch size 128
-1/6 [====>.........................] - ETA: 0s - loss: 0.1727 - accuracy: 0.9847 - recall_m: 0.9811 - precision_m: 0.9882 - f1_m: 0.9846Batch 3 is loaded. 
-Batch size 128
-2/6 [=========>....................] - ETA: 1:13 - loss: 0.1698 - accuracy: 0.9849 - recall_m: 0.9802 - precision_m: 0.9895 - f1_m: 0.9848Batch 2 is loaded. 
-Batch size 128
-3/6 [==============>...............] - ETA: 1:16 - loss: 0.1693 - accuracy: 0.9839 - recall_m: 0.9788 - precision_m: 0.9889 - f1_m: 0.9838Batch 5 is loaded. 
-Batch size 128
-4/6 [===================>..........] - ETA: 55s - loss: 0.1671 - accuracy: 0.9845 - recall_m: 0.9792 - precision_m: 0.9897 - f1_m: 0.9844 Batch 4 is loaded. 
-Batch size 128
-5/6 [========================>.....] - ETA: 29s - loss: 0.1654 - accuracy: 0.9848 - recall_m: 0.9793 - precision_m: 0.9901 - f1_m: 0.9847Batch 1 is loaded. 
-Batch size 128
-6/6 [==============================] - ETA: 0s - loss: 0.1634 - accuracy: 0.9852 - recall_m: 0.9799 - precision_m: 0.9904 - f1_m: 0.9851 Batch 0 is loaded. 
-Batch size 64
-Batch 0 is loaded. 
-Batch size 64
-Batch 1 is loaded. 
-Batch size 64
-Batch 2 is loaded. 
-Batch size 64
-Batch 3 is loaded. 
-Batch size 64
-Batch 4 is loaded. 
-Batch size 64
-Batch 5 is loaded. 
-Batch size 64
-Batch 6 is loaded. 
-Batch size 64
-Batch 7 is loaded. 
-Batch size 64
-6/6 [==============================] - 345s 57s/step - loss: 0.1634 - accuracy: 0.9852 - recall_m: 0.9799 - precision_m: 0.9904 - f1_m: 0.9851 - val_loss: 0.5470 - val_accuracy: 0.9944 - val_recall_m: 0.9889 - val_precision_m: 1.0000 - val_f1_m: 0.9944
-2021-05-31 01:08:58.505732: W tensorflow/python/util/util.cc:329] Sets are not currently considered sequences, but this may change in the future, so consider avoiding using them.
-WARNING:tensorflow:From /home/e14317/.conda/envs/mphilenv/lib/python3.8/site-packages/tensorflow/python/ops/resource_variable_ops.py:1813: calling BaseResourceVariable.__init__ (from tensorflow.python.ops.resource_variable_ops) with constraint is deprecated and will be removed in a future version.
-Instructions for updating:
-If using Keras pass *_constraint arguments to layers.
-Train Set Evaluation
-Batch 0 is loaded. 
-Batch size 64
-Batch 0 is loaded. 
-Batch size 64
-Batch 1 is loaded. 
-Batch size 64
-Batch 2 is loaded. 
-Batch size 64
-Batch 3 is loaded. 
-Batch size 64
-Batch 4 is loaded. 
-Batch size 64
-Batch 5 is loaded. 
-Batch size 64
-Batch 6 is loaded. 
-Batch size 64
-Batch 7 is loaded. 
-Batch size 64
-loss: 54.80%
-accuracy: 99.43%
-recall_m: 98.85%
-precision_m: 100.00%
-f1_m: 99.42%
-Validation Set Evaluation
-Batch 0 is loaded. 
-Batch size 64
-Batch 0 is loaded. 
-Batch size 64
-Batch 1 is loaded. 
-Batch size 64
-Batch 2 is loaded. 
-Batch size 64
-Batch 3 is loaded. 
-Batch size 64
-Batch 4 is loaded. 
-Batch size 64
-Batch 5 is loaded. 
-Batch size 64
-Batch 6 is loaded. 
-Batch size 64
-Batch 7 is loaded. 
-Batch size 64
-loss: 54.73%
-accuracy: 99.47%
-recall_m: 98.93%
-precision_m: 100.00%
-f1_m: 99.46%
-Saved model to disk
