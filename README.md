@@ -6,34 +6,26 @@ SquiggleNet Plus is an improved version of the original (https://genomebiology.b
 > Oxford Nanopore Technologies (ONT) introduced MinION, the first portable commercial sequencer of its kind in 2014. The MinION, being a small handheld device, was able to revolutionize the genomics community by means of its superiority in portability. MinION enables access to real-time current signals when a DNA traverses through the pore. ONTs capability to produce long reads is an added advantage in sequencing to have better genome assemblies. But having to sequence unwanted regions of a genome or unwanted species in a given genome pool is one of the main drawbacks of long reads since it would cost a lot of pore time, reducing the efficiency of sequencing. For example, a DNA strand of one million bases (1Mb) in length on average would take about one hour of sequencing. Therefore, improving the speed of targeted sequencing/selective sequencing in ONT platforms is a widely discussed topic. An efficient and real-time analysis of the current signals from the nanopore would enable performing selective sequencing on a DNA sample with the help of ReadUntil API from ONT which can reverse the current flow in a nanopore to eject a sequencing DNA strand and start sequencing for a new strand. However, existing methods on the current signal to targeted reference genome comparisons are timewise costly and hence would give away the real-time capability of sequencing. Therefore, potential improvements to the performance of selective sequencing in many areas are yet to be discovered. Our approach of deep neural network-based selective sequencing would study possibilities to explore the improved methods of selective sequencing with better accuracy and speed compared to state-of-the art methodologies. Recently in basecalling, there have been breakthrough improvements made with deep neural networks over then existing deterministic approaches. Similarly in selective sequencing, use of customized deep neural network architecture would potentially be beneficial in improving accuracy, speed and also as a sample independent methodology. 
 
 ## Installation
-> Create a virtualenv in Python3.5
+> Create a conda environment in Python3.8
 
 #### On Linux:
-* Open the terminal in the directory where you want to setup the virtual environment.
-* Use the following command to create a python3 virtual environment named "env"
+* Open a terminal in the root directory of the code repository.
+* Use the following command to create a python3 conda environment named sqnetplus
 
 ```
-python3 -m venv env
+conda env create --file sqnetplus.yml
 ```
 
-* Use the following command to activate the virtual environment created.
+* Use the following command to activate the conda environment created.
 
 ```
-source env/bin/activate
+source activate sqnetplus
 ```
 
-* Use the following command to leave the virtual environment.
+* Use the following command to leave the conda environment.
 
 ```
 deactivate
-```
-
-> Installing the list of required dependencies within the created virtual environment.
-
-* Execute the following command to install the list of required dependencies from ```requirements.txt``` file
-
-```
-pip3 install -r requirements.txt
 ```
 
 ## Scripts
