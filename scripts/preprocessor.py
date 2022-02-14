@@ -7,9 +7,9 @@ import numpy as np
 from random import randrange
 
 FAST5_DIR = ''
-CUTOFF = 1000
-SUB_SAMPLE_SIZE = 1000
-SAMPLING_C0 = 2
+CUTOFF = 1500
+SUB_SAMPLE_SIZE = 3000
+SAMPLING_C0 = 1
 BATCH = 1000
 IS_PICO = True
 LABEL = 1
@@ -82,25 +82,24 @@ def read_fast5s(fast5_dir):
 
         for read in f5.get_reads():
             raw_data = read.get_raw_data(scale=IS_PICO)
+            raw_data = modified_zscore(raw_data)
 
             if (len(raw_data) - CUTOFF) > SUB_SAMPLE_SIZE:
                 effective_read = raw_data[CUTOFF:]
-                effective_read = modified_zscore(effective_read)
 
                 for i in range(SAMPLING_C0):
                     segment_count += 1
                     start_idx = randrange(len(effective_read) - SUB_SAMPLE_SIZE)
                     end_idx = start_idx + SUB_SAMPLE_SIZE
                     sampled_read = effective_read[start_idx:end_idx]
-                    # sampled_read = modified_zscore(sampled_read)
-                    # sampled_read = np.asarray(sampled_read, dtype=np.float32)
+                    sampled_read = np.asarray(sampled_read, dtype=np.float32)
                     sampled_read = np.append(sampled_read, LABEL)
-                    sampled_reads_array.append(sampled_read)
+                    sampled_reads_array = np.append(sampled_reads_array, sampled_read)
 
                 print_info()
 
         if len(sampled_reads_array) > 0 and (segment_count % BATCH == 0):
-            sampled_reads_array = np.asarray(sampled_reads_array, dtype=np.float32)
+            # sampled_reads_array = np.asarray(sampled_reads_array, dtype=np.float32)
             export_numpy(sampled_reads_array)
             del sampled_reads_array
             sampled_reads_array = []
