@@ -8,63 +8,22 @@ from sklearn.preprocessing import StandardScaler, RobustScaler
 
 MAD_SCORE = 0
 REPEATED = False
+COUNT = 1000
 total_read_count = 0
-sc_std = StandardScaler()
-sc_robust = RobustScaler()
 
 
-def get_reads(fast5_file):
-    fast5_file_count = 0
-    fast5_read_count = 0
-
-    global total_read_count
-
-    with get_fast5_file(fast5_file, mode="r") as f5:
-        fast5_file_count = fast5_file_count + 1
-        with Fast5(fast5_file) as fh5:
-            for read in f5.get_reads():
-                # print(fast5_file)
-                fast5_read_count = fast5_read_count + 1
-                raw_data = read.get_raw_data()
-
-                _range = int(fh5.channel_meta['range'])
-
-                read_converted = convert_to_pico(raw_data,
-                                                 fh5.channel_meta['offset'],
-                                                 fh5.channel_meta['range'],
-                                                 fh5.channel_meta['digitisation'])
-                # raw_data = raw_data.reshape(-1, 1)
-                read_converted = modified_zscore(read_converted, file=fast5_file)
-
-                # plot_reads(read_converted)
-                boxplot(read_converted)
-                total_read_count = total_read_count + 1
-
-
-def z_score(data):
-    data = data.reshape(-1, 1)
-    normalized = sc_std.fit_transform(data)
-    return normalized
-
-
-def robust_scaler(data):
-    data = data.reshape(-1, 1)
-    normalized = sc_std.fit_transform(data)
-    return normalized
-
-
-def modified_zscore(data, file, consistency_correction=1.4826):
+def modified_zscore(data, consistency_correction=1.4826):
     median = np.median(data)
     dev_from_med = np.array(data) - median
     mad = np.median(np.abs(dev_from_med))
-    mad_score = dev_from_med/(consistency_correction*mad)
+    mad_score = dev_from_med / (consistency_correction * mad)
 
     x = np.where(np.abs(mad_score) > MAD_SCORE)
     x = x[0]
 
     while True:
         if len(x) > 0:
-            print(file, mad_score[x[0]])
+            # print(file, mad_score[x[0]])
 
             for i in range(len(x)):
                 if x[i] == 0:
@@ -76,71 +35,67 @@ def modified_zscore(data, file, consistency_correction=1.4826):
 
         x = np.where(np.abs(mad_score) > MAD_SCORE)
         x = x[0]
-        if REPEATED or len(x) <= 0:
+        if ~REPEATED or len(x) <= 0:
             break
 
     return mad_score
 
 
-def line_that_contain(string, fp):
-    for line in fp:
-        if string in line:
-            return line
+def plot_npy(path, color):
+    global total_read_count
+    with get_fast5_file(path, mode="r") as f5:
+        for read in f5.get_reads():
+            raw_data = read.get_raw_data(scale=True)
+            if total_read_count == COUNT:
+                break
+            else:
+                # raw_data = raw_data.reshape(-1, 1)
+                normalized_read = modified_zscore(raw_data)
+
+                # plt.plot(normalized_read, color=color)
+                plt.boxplot(normalized_read)
+                total_read_count = total_read_count + 1
+                print("Plotting reads {}".format(total_read_count))
 
 
-def convert_to_pico(raw_data_arr, _offset, _range, _digitisation):
-    arr = np.zeros(raw_data_arr.shape, dtype=np.float32)
-    for index in range(len(raw_data_arr)):
-        arr[index] = (raw_data_arr[index] + _offset) * (_range / _digitisation)
-    return arr
-
-
-def iterate_dirs_and_read_fast5s(root, directs):
+def iterate_dirs_and_read_fast5s(root, directs, color):
     for direc in directs:
         path = root + direc
         for root, dirs, files in os.walk(path):
             if dirs:
-                iterate_dirs_and_read_fast5s(root, dirs)
+                iterate_dirs_and_read_fast5s(root, dirs, color)
             if files:
-                read_fast5s(root, files)
+                read_fast5s(root, files, color)
 
 
-def read_fast5s(root, files):
+def read_fast5s(root, files, color):
     for file in files:
         path = root + '/' + file
         if file.endswith(".fast5"):
-            get_reads(path)
-
-
-def plot_reads(read):
-    plt.plot(read, color='blue')
-    # plt.pause(0.5)
-    # plt.draw()
-
-
-def boxplot(reads):
-    plt.boxplot(reads)
-    # plt.pause(0.5)
-    # plt.draw()
+            plot_npy(path, color)
 
 
 @click.command()
 @click.option('--fast5_dir', '-f5', help='path to fast5 directory')
 @click.option('--mad', '-mad', default=3, help='mad value', type=int)
 @click.option('--repeated_norm', '-rep', default=False, help='repeated normalization or not', type=bool)
-def main(fast5_dir, mad, repeated_norm):
-    global MAD_SCORE, REPEATED
+@click.option('--num_of_reads', '-num', default=1000, help='Number of reads', type=int)
+def main(fast5_dir, mad, repeated_norm, num_of_reads):
+    global MAD_SCORE, REPEATED, COUNT
     MAD_SCORE = mad
     REPEATED = repeated_norm
+    COUNT = num_of_reads
+
     for root, dirs, files in os.walk(fast5_dir):
         if dirs:
-            iterate_dirs_and_read_fast5s(root, dirs)
+            iterate_dirs_and_read_fast5s(root, dirs, 'blue')
         if files:
-            read_fast5s(root, files)
-    plt.title("Raw value plot for " + str(total_read_count) + " reads")
-    # plt.xlabel("ith raw sample of the read")
-    plt.ylabel("Normalized raw signal value")
-    plt.savefig('figure.png')
+            read_fast5s(root, files, 'blue')
+
+    plt.title("Boxplot for " + str(total_read_count) + " reads")
+    # plt.xlabel("n th Signal of the Read")
+    plt.ylabel("Normalized Signal Value")
+    plt.savefig('boxplot.png')
     plt.show()
 
 

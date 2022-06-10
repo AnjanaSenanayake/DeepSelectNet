@@ -56,8 +56,8 @@ def modified_zscore(data, consistency_correction=1.4826):
 def export_numpy(sampled_reads_array):
     global np_dump_count
     np_dump_count += 1
-    print(sampled_reads_array)
-    np_array = sampled_reads_array.reshape(-1, SUB_SAMPLE_SIZE + 1)
+    # print(sampled_reads_array)
+    np_array = np.reshape(sampled_reads_array, (-1, SUB_SAMPLE_SIZE + 1))
     np.random.shuffle(np_array)
     np.save(OUTPUT + '/' + str(np_dump_count), np_array)
 
@@ -82,7 +82,6 @@ def read_fast5s(fast5_dir):
 
         for read in f5.get_reads():
             raw_data = read.get_raw_data(scale=IS_PICO)
-            raw_data = modified_zscore(raw_data)
 
             if (len(raw_data) - CUTOFF) > SUB_SAMPLE_SIZE:
                 effective_read = raw_data[CUTOFF:]
@@ -92,13 +91,14 @@ def read_fast5s(fast5_dir):
                     start_idx = randrange(len(effective_read) - SUB_SAMPLE_SIZE)
                     end_idx = start_idx + SUB_SAMPLE_SIZE
                     sampled_read = effective_read[start_idx:end_idx]
+                    sampled_read = modified_zscore(sampled_read)
                     sampled_read = np.asarray(sampled_read, dtype=np.float32)
                     sampled_read = np.append(sampled_read, LABEL)
-                    sampled_reads_array = np.append(sampled_reads_array, sampled_read)
+                    sampled_reads_array.append(sampled_read)
 
                 print_info()
 
-        if len(sampled_reads_array) > 0 and (segment_count % BATCH == 0):
+        if len(sampled_reads_array) > 0 and (file_count % BATCH == 0):
             # sampled_reads_array = np.asarray(sampled_reads_array, dtype=np.float32)
             export_numpy(sampled_reads_array)
             del sampled_reads_array

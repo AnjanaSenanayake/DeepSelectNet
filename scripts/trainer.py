@@ -1,5 +1,10 @@
 import os
 import sys
+from timeit import default_timer as timer
+from datetime import timedelta
+from pathlib import Path
+path = str(Path(Path(__file__).parent.absolute()).parent.absolute())
+sys.path.insert(0, path)
 from os import walk
 from datetime import datetime
 import numpy
@@ -7,16 +12,17 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 from tensorflow.python.keras.callbacks import Callback
-from FCN import FCN
-from ResNet import RESNET
-from InceptionNet import InceptionNet
-from TransformerNet import TransformerNet
-from NPYDataGenerator import DataGenerator
+from core.FCN import FCN
+from core.ResNet import RESNET
+from core.InceptionNet import InceptionNet
+from core.TransformerNet import TransformerNet
+from core.NPYDataGenerator import DataGenerator
 from sklearn.model_selection import ShuffleSplit
 import click
-from Logger import Logger
+from core.Logger import Logger
 
 cv_scores = []
+train_times = []
 CLASSIFIER = 'ResNet'
 ACCURACY_METRIC = tf.keras.metrics.BinaryAccuracy().name
 LOSS_FUNC = tf.keras.metrics.BinaryCrossentropy().name
@@ -199,9 +205,9 @@ def main(dataset, classifier, loss_func, split_ratio, is_occ, is_one_hot, folds,
     idx = np.arange(1, (dataset_size / 2) + 1, 1)
     k_fold = ShuffleSplit(n_splits=folds, train_size=split_ratio, random_state=0)
 
-    reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(monitor="binary_accuracy", factor=0.1, patience=5, mode="max",
+    reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(monitor="val_binary_accuracy", factor=0.5, patience=20, mode="max",
                                                      min_lr=0, verbose=1)
-    early_stopping = tf.keras.callbacks.EarlyStopping(monitor="val_binary_accuracy", patience=15, verbose=1,
+    early_stopping = tf.keras.callbacks.EarlyStopping(monitor="val_binary_accuracy", patience=30, verbose=1,
                                                       restore_best_weights=True)
     # validation_callback = ValidationCallback(in_shape, model, validation)
 
@@ -243,7 +249,7 @@ def main(dataset, classifier, loss_func, split_ratio, is_occ, is_one_hot, folds,
         model_checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath=OUTPUT_PATH + '/checkpoints_' + str(k),
                                                               monitor='val_binary_accuracy',
                                                               save_best_only=True, verbose=1)
-
+        start = timer()
         history = model.fit(
             x=train[:, :-1],
             y=train[:, -1],
@@ -254,19 +260,21 @@ def main(dataset, classifier, loss_func, split_ratio, is_occ, is_one_hot, folds,
             epochs=epochs,
             callbacks=[reduce_lr, early_stopping, model_checkpoint],
             verbose=1)
+        end = timer()
 
         for i in range(len(model.metrics)):
             train_history[list(train_history.keys())[i]] = history.history[model.metrics_names[i]]
             validation_history[list(validation_history.keys())[i]] = history.history['val_' + model.metrics_names[i]]
 
-        best_val_accuracy = round(early_stopping.best * 100)
+        best_val_accuracy = round(early_stopping.best * 100, 2)
         # best_val_accuracy = round(history.history['val_binary_accuracy'] * 100)
         cv_scores.append(best_val_accuracy)
-
+        train_times.append(str(timedelta(seconds=end-start)))
         '''save model'''
         model_path = OUTPUT_PATH + "/model_" + str(best_val_accuracy) + '_k' + str(k)
         model.save(model_path)
         print("Best checkpoint: ", model_checkpoint.best)
+        print("Time Elapsed: {}".format(str(timedelta(seconds=end-start))))
         print("Saved model to disk at ", model_path)
 
         ep = epochs
@@ -294,7 +302,7 @@ def main(dataset, classifier, loss_func, split_ratio, is_occ, is_one_hot, folds,
     plt.savefig(OUTPUT_PATH + '/validation_accuracies_over_folds.png')
 
     for i, sc in enumerate(cv_scores):
-        print("%d fold accuracy: %.2f%%" % (i + 1, sc))
+        print("%d fold accuracy: %.2f%% elapsed time: %s mins" % (i + 1, sc, train_times[i]))
     print("%.2f%% (+/- %.2f%%)" % (np.mean(cv_scores), np.std(cv_scores)))
     sys.stdout.close()
 

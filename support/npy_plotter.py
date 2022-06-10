@@ -11,18 +11,6 @@ sc_std = StandardScaler()
 sc_robust = RobustScaler()
 
 
-def get_samples(npy_file):
-    global total_sample_count
-
-    data = np.load(npy_file)
-    for i, sample in enumerate(data):
-        sample = modified_zscore(data=sample, file=i)
-
-        # plot_reads(sample)
-        boxplot(sample)
-        total_sample_count = total_sample_count + 1
-
-
 def z_score(data):
     data = data.reshape(-1, 1)
     normalized = sc_std.fit_transform(data)
@@ -35,13 +23,13 @@ def robust_scaler(data):
     return normalized
 
 
-def modified_zscore(data, file, consistency_correction=1.4826):
+def modified_zscore(data, file, MAD, consistency_correction=1.4826):
     median = np.median(data)
     dev_from_med = np.array(data) - median
     mad = np.median(np.abs(dev_from_med))
     mad_score = dev_from_med/(consistency_correction*mad)
 
-    x = np.where(np.abs(mad_score) > MAD_SCORE)
+    x = np.where(np.abs(mad_score) > MAD)
     x = x[0]
 
     while True:
@@ -71,40 +59,37 @@ def convert_to_pico(raw_data_arr, _offset, _range, _digitisation):
     return arr
 
 
-def read_npys(root, files):
+def plot_npy(root, files, count, color):
+    global total_sample_count
+    total_sample_count = 0
     for file in files:
         path = root + '/' + file
         if file.endswith(".npy"):
-            get_samples(path)
-
-
-def plot_reads(read):
-    plt.plot(read, color='blue')
-    # plt.pause(0.5)
-    # plt.draw()
-
-
-def boxplot(reads):
-    plt.boxplot(reads)
-    # plt.pause(0.5)
-    # plt.draw()
+            data = np.load(path)
+            for i, sample in enumerate(data):
+                if total_sample_count == count:
+                    break
+                else:
+                    plt.plot(sample, color=color)
+                    # plt.boxplot(sample, color=color)
+                    print("Plotting reads {}".format(total_sample_count))
+                    total_sample_count += 1
 
 
 @click.command()
-@click.option('--numpy', '-np', help='path to npy directory')
-@click.option('--mad', '-mad', default=3, help='mad value', type=int)
-@click.option('--repeated_norm', '-rep', default=False, help='repeated normalization or not', type=bool)
-def main(numpy, mad, repeated_norm):
-    global MAD_SCORE, REPEATED
-    MAD_SCORE = mad
-    REPEATED = repeated_norm
-    for root, _, files in os.walk(numpy):
-        read_npys(root, files)
-    plt.title("Raw value plot for " + str(total_sample_count) + " reads")
+@click.option('--numpy_1', '-npy1', help='Path to npy directory')
+@click.option('--numpy_2', '-npy2', help='Path to npy directory')
+@click.option('--num_of_reads', '-num', default=1000, help='Number of reads', type=int)
+def main(numpy_1, numpy_2, num_of_reads):
+    for root, _, files in os.walk(numpy_1):
+        plot_npy(root, files, num_of_reads, "blue")
+    for root, _, files in os.walk(numpy_2):
+        plot_npy(root, files, num_of_reads, "red")
+    plt.title("Normalized signal plot for " + str(total_sample_count) + " reads")
     plt.xlabel("ith raw sample of the read")
     plt.ylabel("Normalized raw signal value")
     plt.savefig('figure.png')
-    plt.show()
+    # plt.show()
 
 
 if __name__ == '__main__':
