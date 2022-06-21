@@ -1,5 +1,5 @@
-# SquiggleNet-Plus
-SquiggleNet Plus is an improved version of the original (https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02511-y) 1D ResNet based model to classify Oxford Nanopore raw electrical signals as target or non-target for Read-Until sequence enrichment or depletion. SquiggleNet Plus provides enhanced model performances.
+# DeepSelecNet
+DeepSelecNet is an improved version of the original (https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02511-y) 1D ResNet based model to classify Oxford Nanopore raw electrical signals as target or non-target for Read-Until sequence enrichment or depletion. DeepSelecNet provides enhanced model performances.
 
 ### Abstract
 
