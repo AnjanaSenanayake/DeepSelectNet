@@ -88,4 +88,4 @@ Predict the class of unseen fast5 reads with trained model
 python inference.py -model <saved_model_dir> -f5 <fast5_dir> -lb 1 -mad 5 -o <output_dir>
 ```
 
-### [Support Scripts](support/README.md#support-scripts)
+### [Support Scripts](support)
