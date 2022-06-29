@@ -184,8 +184,8 @@ def main(dataset, classifier, loss_func, split_ratio, is_occ, is_one_hot, folds,
 
     if dataset:
         _, _, npy_files = next(walk(dataset))
-        pos_data = np.load(dataset + '/' + npy_files[0])
-        neg_data = np.load(dataset + '/' + npy_files[1])
+        pos_data = np.load(dataset + '/' + npy_files[1])
+        neg_data = np.load(dataset + '/' + npy_files[0])
         n_steps = pos_data.shape[1] - 1
         dataset_size = len(pos_data) + len(neg_data)
     else:
