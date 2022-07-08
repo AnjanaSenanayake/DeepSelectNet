@@ -71,9 +71,9 @@ def export_numpy(sampled_reads_array):
 def print_info():
     if NUM_OF_READS:
         if LABEL == 1:
-            print("Processing positive reads {}/{}".format(read_count, NUM_OF_READS))
+            print("Processing positive reads {}/{}".format(read_count+rejected_count, NUM_OF_READS))
         else:
-            print("Processing negative reads {}/{}".format(read_count, NUM_OF_READS))
+            print("Processing negative reads {}/{}".format(read_count+rejected_count, NUM_OF_READS))
     else:
         print("No files to preprocess")
 
