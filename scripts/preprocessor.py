@@ -94,7 +94,7 @@ def read_slow5s(slow5_dir):
         print("Number of reads should be equal or more than batch process size")
         print("Num. of reads = {}, Batch Size = {}".format(NUM_OF_READS, BATCH))
         shutil.rmtree(OUTPUT)
-        exit(0)
+        exit(1)
 
     for read in reads:
         raw_data = read['signal']
@@ -164,9 +164,9 @@ def main(positive_slow5_dir, negative_slow5_dir, cutoff, subsample_size, samplin
     stats['t_neg_read'] = read_count
     stats['r_neg_reads'] = rejected_count
 
-    print("Total processed positive reads: {}".format(stats['t_pos_reads']-stats['r_pos_reads']))
+    print("Total processed positive reads: {}".format(stats['t_pos_reads']))
     print("Total ignored positive reads: {}".format(stats['r_pos_reads']))
-    print("Total processed negative reads: {}".format(stats['t_neg_read']-stats['r_neg_reads']))
+    print("Total processed negative reads: {}".format(stats['t_neg_read']))
     print("Total ignored negative reads: {}".format(stats['r_neg_reads']))
 
     if stats['t_pos_reads'] != stats['t_neg_read']:
@@ -174,6 +174,7 @@ def main(positive_slow5_dir, negative_slow5_dir, cutoff, subsample_size, samplin
         print("Num. of processed positive reads and processed negative reads are in-equal. Dump is imbalanced", file=sys.stderr)
         print("Please re-run preprocessor with different dataset", file=sys.stderr)
         shutil.rmtree(OUTPUT)
+        exit(1)
 
 
 if __name__ == '__main__':
