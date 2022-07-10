@@ -8,7 +8,7 @@ DeepSelecNet is an improved version of the original (https://genomebiology.biome
 ## Installation
 
 ### Prerequisities
-* Python >= 3.5
+* Python 3.5 >= version <= 3.8
 * Python venv
 
 #### Steps(On Linux)
@@ -31,7 +31,7 @@ source deepselectenv/bin/activate
 pip install -r requirements.txt
 ```
 
-5) [Optional] To Leave the environment when not in use.
+5) [Optional] To Lave the environment when not in use.
 
 ```
 deactivate
@@ -42,18 +42,18 @@ deactivate
 #### 1. Preprocessor
 Preprocess the slow5 files into numpy dumps so that they can be used for training
 - Args
-  * pos_s5   - Path to positive slow5 directory
-  * neg_s5   - Path to negative slow5 directory
+  * pos_s5   - Path to positive slow5 file
+  * neg_s5   - Path to negative slow5 file
   * c    - Read signal cutoff value (default=1500)
-  * sz   - Read signal sample size (default=1000)
-  * sco  - Subsampling coefficient/Number of random samplings from a single read (default=1)
-  * b    - Number of slow5 read samples should be in a numpy dump (default=1000)
+  * sz   - Read signal sample size (default=3000)
+  * sco  - Subsampling coefficient/Number of random samplings from a single read (default=4)
+  * b    - Number of slow5 read samples should be in a numpy dump (default=20000)
   * pico - Is enabled pico conversion (default=True)
   * mad  - Median absolute deviation value for data normalization (default=3)
   * rep  - Is repeatedly normalized or not (default=False)
   * o    - Numpy dump output path
 ```
-python scripts/preprocessor.py -pos_s5 <pos_slow5_dir> -neg_s5 <neg_slow5_dir> -b 1000 -c 1500 -mad 5 -o <output_dir>
+python scripts/preprocessor.py -pos_s5 <pos_slow5> -neg_s5 <neg_slow5> -b 20000 -c 1500 sco 4 -mad 3 -o <output_dir>
 ```
 
 #### 2. Trainer
@@ -70,7 +70,7 @@ Train the model for given dataset using dumped numpy arrays
   * b   - Batch size (default=1000)
   * o   - Trained model output path
 ```
-python scripts/trainer.py -d <npy_dump_dir> -c ResNet -lf bc -s 0.7 -k 5 -e 200 -o <output_dir>
+python scripts/trainer.py -d <npy_dump_dir> -s 0.7 -k 5 -e 200 -o <output_dir>
 ```
 
 #### 3. Inference
@@ -80,7 +80,7 @@ Predict the class of unseen slow5 reads with trained model
   * s5    - Path to slow5 directory required to predict
   * b     - The batch size (default=1)
   * c     - The read signal cutoff value (default=1500)
-  * sz    - Read signal sample size (default=1000)
+  * sz    - Read signal sample size (default=3000)
   * sco   - Subsampling coefficient/Number of random samplings from a single read (default=1)
   * pico  - Is enabled pico conversion (default=True)
   * lb    - Class label of the preprocessing dataset (default=1) | 1 -> positive class | 0 -> negative class
@@ -88,7 +88,7 @@ Predict the class of unseen slow5 reads with trained model
   * rep   - Is repeatedly normalized or not (default=False)
   * o     - Predictions output path
 ```
-python scripts/inference.py -model <saved_model_dir> -s5 <slow5_dir> -lb 1 -mad 5 -o <output_dir>
+python scripts/inference.py -model <saved_model_dir> -s5 <slow5_dir> -lb 1 -mad 3 -o <output_dir>
 ```
 
 ### [Support Scripts](support)
