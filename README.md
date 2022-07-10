@@ -55,6 +55,9 @@ Preprocess the slow5 files into numpy dumps so that they can be used for trainin
 ```
 python scripts/preprocessor.py -pos_s5 <pos_slow5> -neg_s5 <neg_slow5> -b 20000 -c 1500 sco 4 -mad 3 -o <output_dir>
 ```
+Note:
+- Num. of reads from source(pos_s5, neg_s5) should be enough to generate a balanced dataset with Num. of reads equal to batch size(b).
+- Read lengths in source reads should be larger than cutoff value(c) + sample size(sz)
 
 #### 2. Trainer
 Train the model for given dataset using dumped numpy arrays
