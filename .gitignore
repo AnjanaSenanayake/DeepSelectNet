@@ -1,4 +1,5 @@
 .idea
+.envs
 sync.sh
 tools/
 # Byte-compiled / optimized / DLL files
