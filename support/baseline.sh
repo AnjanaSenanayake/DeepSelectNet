@@ -20,7 +20,7 @@ if test -f "$POS_READ_IDS"; then
   echo "$POS_READ_IDS already exists in directory."
 else
   echo "Extracting pos read ids."
-  ~/DeepSelevtNet/tools/slow5tools-v0.3.0/slow5tools view $POS_FAST5_PATH | grep -v '^[#@]' | awk '{print $1}' > $POS_READ_IDS
+  ../tools/slow5tools-v0.3.0/slow5tools view $POS_FAST5_PATH | grep -v '^[#@]' | awk '{print $1}' > $POS_READ_IDS
   #python ~/DeepSelectNet/support/export_read_id.py -f5 $POS_FAST5_PATH -o $POS_READ_IDS
 fi
 
@@ -28,19 +28,19 @@ if test -f "$NEG_READ_IDS"; then
   echo "$NEG_READ_IDS already exists in directory."
 else
   echo "Extracting neg read ids."
-  ~/DeepSelevtNet/tools/slow5tools-v0.3.0/slow5tools view $NEG_FAST5_PATH | grep -v '^[#@]' | awk '{print $1}' > $NEG_READ_IDS
+  ../tools/slow5tools-v0.3.0/slow5tools view $NEG_FAST5_PATH | grep -v '^[#@]' | awk '{print $1}' > $NEG_READ_IDS
   #python ~/DeepSelectNet/support/export_read_id.py -f5 $NEG_FAST5_PATH -o $NEG_READ_IDS
 fi
 
 cat $POS_FASTQ_PATH $NEG_FASTQ_PATH > $TESTFASTQ
-python ~/DeepSelectNet/support/fastq_parser.py -fq $TESTFASTQ -shrt True
+python support/fastq_parser.py -fq $TESTFASTQ -shrt True
 
 
 if test -f $MAPPED_NAME;then
   echo "Minimap is already completed."
 else
   echo "Minimap is starting..."
-  ~/DeepSelectNet/tools/minimap2/minimap2 -cx map-ont --secondary=no $MIXED_REF $TESTFASTQ > $MAPPED_NAME
+  ../tools/minimap2/minimap2 -cx map-ont --secondary=no $MIXED_REF $TESTFASTQ > $MAPPED_NAME
   echo "Minimap is completed."
 fi
 
