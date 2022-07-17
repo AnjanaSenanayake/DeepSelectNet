@@ -16,7 +16,7 @@ Run the baseline analysis for given dataset
   * $4 - Path to negative fastq file
   * $5 - Path to mixed reference genome (This is the concatenated reference genome of the 2 species)
 ```
-python read_id_exporter.py -f5 <fast5_file> -o <output_file.txt>
+sh baseline.sh <$1> <$2> <$3> <$4> <$5>
 ```
 #### 3. fast5_filter.py
 Filter single_fast5 files in a directory with read length or compared to a list
