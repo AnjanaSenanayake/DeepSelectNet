@@ -1,7 +1,7 @@
 ## Support Scripts
 
 #### 1. fastq_trimmer.py
-Trim fastq reads shorten the read to a specific length
+Trim fastq reads to shorten the read to a specific length
 - Args
   * fq - Path to fastq file
 ```
