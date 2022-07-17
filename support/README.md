@@ -1,18 +1,20 @@
 ## Support Scripts
 
-#### 1. event_sorter.py
-Sorts events in a tsv file in ascending order
-- Options
-  * tsv - Path to tsv file
-  * b - The number of events to be sorted for one output
+#### 1. fastq_trimmer.py
+Trim fastq reads shorten the read to a specific length
+- Args
+  * fq - Path to fastq file
 ```
-python event_sorter.py -tsv <tsv_file.tsv> -b 1000
+python fastq_trimmer.py -fq <fastq_file>
 ```
-#### 2. read_id_exporter.py
-Sorts events in a tsv file in ascending order
-- Options
-  * f5 - Path to fast5 file
-  * o - Path to output file
+#### 2. baseline.sh
+Run the baseline analysis for given dataset
+- Args
+  * $1 - Path to positive slow5 file
+  * $2 - Path to negative slow5 file
+  * $3 - Path to positive fastq file
+  * $4 - Path to negative fastq file
+  * $5 - Path to mixed reference genome (This is the concatenated reference genome of the 2 species)
 ```
 python read_id_exporter.py -f5 <fast5_file> -o <output_file.txt>
 ```
