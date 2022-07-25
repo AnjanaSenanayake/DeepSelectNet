@@ -13,7 +13,7 @@ echo "Exporting headers..."
 $slow5tools view $BLOW5_FILE | grep '^[@#]' > headers.tmp
 
 echo "Exporting eligible reads..."
-$slow5tools view $BLOW5_FILE | grep -v '^[@#]' | awk '{if($7>=4500) print$0}' > eligible-reads.tmp
+$slow5tools view $BLOW5_FILE | grep -v '^[@#]' | awk -v trim_len="${TRIM_LEN}" '{if($7>=trim_len) print$0}' > eligible-reads.tmp
 
 echo "Trimming started for exported reads..."
 cat eligible-reads.tmp | cut -f 1-6 > eligible-reads-col1-6.tmp
