@@ -1,5 +1,6 @@
 BLOW5_FILE=$1
 TRIM_LEN=$2
+OUTPUT=$3
 
 export slow5tools=$HOME/DeepSelectNet/tools/slow5tools-v0.3.0/slow5tools
 
@@ -21,10 +22,11 @@ cat eligible-reads-col1-6.tmp | awk -v trim_len="${TRIM_LEN}" '{print$0"\t"trim_
 cat eligible-reads.tmp |  cut -f 8 | cut -d "," -f -$TRIM_LEN > eligible-reads-col8-trimmed.tmp
 cat eligible-reads.tmp |  cut -f 9- > eligible-reads-col9-.tmp
 paste eligible-reads-col1-7.tmp eligible-reads-col8-trimmed.tmp eligible-reads-col9-.tmp > preprocessed-reads.tmp
-paste eligible-reads-col1-7.tmp eligible-reads-col8-trimmed.tmp eligible-reads-col9-.tmp > preprocessed-reads.tmp
-cat headers.tmp preprocessed-reads.tmp > preprocessed-reads.slow5
+cat headers.tmp preprocessed-reads.tmp > trimmed-reads.slow5
+$slow5tools view trimmed-reads.slow5 -o $OUTPUT
 echo "Trimming completed for exported reads..."
 
 echo "Removing temporary files..."
 rm *.tmp
+rm trimmed-reads.slow5
 echo "Slow5 reads are trimmed successfully!"

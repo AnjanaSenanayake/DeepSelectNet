@@ -3,6 +3,7 @@ import sys
 from timeit import default_timer as timer
 from datetime import timedelta
 from pathlib import Path
+
 path = str(Path(Path(__file__).parent.absolute()).parent.absolute())
 sys.path.insert(0, path)
 from random import randrange
@@ -65,7 +66,9 @@ def main(saved_model, slow5_dir, cutoff, subsample_size, sampling_coefficient, b
 
     true_predicts = 0
     false_predicts = 0
-    s5_count = 0
+    predicted_read_count = 0
+    read_count = 0
+    test_x_array = []
     accuracy = 0
     rejected_reads = 0
     per_read_time = 0
@@ -77,38 +80,47 @@ def main(saved_model, slow5_dir, cutoff, subsample_size, sampling_coefficient, b
     _, num_reads = s5.get_read_ids()
     for read in s5.seq_reads(pA=IS_PICO):
         raw_read = read['signal']
+        read_count += 1
         if (read['len_raw_signal'] - CUTOFF) > SUB_SAMPLE_SIZE:
             effective_read = raw_read[CUTOFF:]
             start_idx = randrange(len(effective_read) - SUB_SAMPLE_SIZE)
             end_idx = start_idx + SUB_SAMPLE_SIZE
             test_x = effective_read[start_idx:end_idx]
-            test_x = modified_zscore(test_x)
-            test_x = test_x.reshape(1, SUB_SAMPLE_SIZE, n_features)
-            read_prediction_start = timer()
-            predicted_y = inference_model.predict(test_x, batch_size=BATCH)
-            read_prediction_end = timer()
-            if predicted_y > 0.5:
-                rounded_predicted_y = 1
-            else:
-                rounded_predicted_y = 0
-            if rounded_predicted_y == LABEL:
-                true_predicts += 1
-            else:
-                false_predicts += 1
-            s5_count += 1
-            per_read_time = per_read_time + (read_prediction_end - read_start)
-            per_read_prediction_time = per_read_prediction_time + (read_prediction_end - read_prediction_start)
-            accuracy = (true_predicts * 100) / (
-                        true_predicts + false_predicts + tf.keras.backend.epsilon())
-            print("predicted: ", rounded_predicted_y, "Actual: ", LABEL, "Confidence: ",
-                  round(predicted_y[0][0] * 100, 4), "Accuracy: ", accuracy, "reads: ", s5_count,
-                  "/", num_reads)
+            # test_x = modified_zscore(test_x)
+            # test_x = test_x.reshape(1, SUB_SAMPLE_SIZE, n_features)
+            test_x = np.asarray(test_x, dtype=np.float32)
+            test_x_array.append(test_x)
+
+            if read_count % BATCH == 0:
+                test_x = modified_zscore(test_x_array)
+                read_prediction_start = timer()
+                predicted_ys = inference_model.predict(test_x, batch_size=BATCH)
+                read_prediction_end = timer()
+                test_x_array = []
+
+                for predicted_y in predicted_ys:
+                    if predicted_y > 0.5:
+                        rounded_predicted_y = 1
+                    else:
+                        rounded_predicted_y = 0
+
+                    if rounded_predicted_y == LABEL:
+                        true_predicts += 1
+                    else:
+                        false_predicts += 1
+                    predicted_read_count += 1
+                    per_read_time = (read_prediction_end - read_start) / BATCH
+                    per_read_prediction_time = (read_prediction_end - read_prediction_start) / BATCH
+                    accuracy = (true_predicts * 100) / (
+                            true_predicts + false_predicts + tf.keras.backend.epsilon())
+                    print("predicted: ", rounded_predicted_y, "Actual: ", LABEL, "Confidence: ", round(predicted_y[0] * 100, 4), "Accuracy: ", accuracy, "reads: ", predicted_read_count,
+                          "/", num_reads)
         else:
             rejected_reads += 1
     end = timer()
     print("Total Time Elapsed: {}".format(str(timedelta(seconds=end - start))))
-    print("Per Read Time Elapsed: {}".format(str(timedelta(seconds=per_read_time / num_reads))))
-    print("Per Read Prediction Time Elapsed: {}".format(str(timedelta(seconds=per_read_prediction_time / num_reads))))
+    print("Per Read Time Elapsed: {}".format(str(timedelta(seconds=per_read_time))))
+    print("Per Read Prediction Time Elapsed: {}".format(str(timedelta(seconds=per_read_prediction_time))))
     print("True Predicts: ", true_predicts)
     print("False Predicts: ", false_predicts)
     print("Predicts Accuracy: ", accuracy, "%")
@@ -117,23 +129,27 @@ def main(saved_model, slow5_dir, cutoff, subsample_size, sampling_coefficient, b
 
 
 def modified_zscore(data, consistency_correction=1.4826):
-    median = np.median(data)
-    dev_from_med = np.array(data) - median
-    mad = np.median(np.abs(dev_from_med))
-    mad_score = dev_from_med / (consistency_correction * mad)
+    median = np.median(data, axis=1)
+    dev_from_med = np.array(data) - np.expand_dims(median, axis=1)
+    mad = np.median(np.abs(dev_from_med), axis=1)
+    mad_score = dev_from_med / (consistency_correction * np.expand_dims(mad, axis=1))
 
     x = np.where(np.abs(mad_score) > MAD_SCORE)
-    x = x[0]
+    # x = x[0]
 
     while True:
         if len(x) > 0:
-            for i in range(len(x)):
-                if x[i] == 0:
-                    mad_score[x[i]] = mad_score[x[i] + 1]
-                elif x[i] == len(mad_score) - 1:
-                    mad_score[x[i]] = mad_score[x[i] - 1]
+            for i in range(x[0].shape[0]):
+                if x[1][i] == 0:
+                    # mad_score[x[i]] = mad_score[x[i] + 1]
+                    mad_score[x[0][i], x[1][i]] = mad_score[x[0][i], x[1][i] + 1]
+                elif x[1][i] == SUB_SAMPLE_SIZE - 1:
+                    # mad_score[x[i]] = mad_score[x[i] - 1]
+                    mad_score[x[0][i], x[1][i]] = mad_score[x[0][i], x[1][i] - 1]
                 else:
-                    mad_score[x[i]] = (mad_score[x[i] - 1] + mad_score[x[i] + 1]) / 2
+                    # mad_score[x[i]] = (mad_score[x[i] - 1] + mad_score[x[i] + 1]) / 2
+                    mad_score[x[0][i], x[1][i]] = (mad_score[x[0][i], x[1][i] - 1] + mad_score[
+                        x[0][i], x[1][i] + 1]) / 2
         else:
             break
 

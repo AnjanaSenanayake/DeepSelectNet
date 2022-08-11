@@ -17,8 +17,7 @@ file_count = 0
 @click.option('--delete', '-del', default=False, help='Delete source file', type=bool)
 @click.option('--rename', '-rn', default='', help='Rename source file', type=str)
 def main(src, dest, is_iterative, extension, count, cut, delete, rename):
-    if not delete and not os.path.exists(dest):
-        os.makedirs(dest)
+    ls
 
     if is_iterative:
         for root, dirs, files in os.walk(src):
