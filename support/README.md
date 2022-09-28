@@ -1,6 +1,18 @@
 ## Support Scripts
 
-#### 1. baseline.sh
+#### 1. dataset_partitioner.sh
+Partition given blow5 in to train and test splits with given number of reads for each
+- Args
+  * $1 - path to source BLOW5
+  * $2 - Required minimum read length for train/test sets
+  * $3 - Number of reads for train set
+  * $4 - Number of reads for test set
+  * $5 - Output file/dataset name
+```
+sh dataset_partitioner.sh covid.blow5 4500 20000 20000 covid
+```
+
+#### 2. baseline.sh
 Run the baseline analysis for given dataset
 - Args
   * $1 - Path to positive blow5 file
@@ -14,7 +26,7 @@ Run the baseline analysis for given dataset
 sh baseline.sh covid.blow5 zymo.blow5 covid.fastq zymo.fastq covid.ref.fasta zymo-ref.fasta 300
 ```
 
-#### 2. trim-slow5-reads.sh
+#### 3. trim-slow5-reads.sh
 Provide trimmed Slow5 reads with given raw signal length
 - Args
   * $1 - Slow5 file
@@ -23,28 +35,15 @@ Provide trimmed Slow5 reads with given raw signal length
 sh trim-slow5-reads.sh covid.slow5 4500
 ```
 
-#### 3. fast5_filter.py
-Filter single_fast5 files in a directory with read length or compared to a list
+#### 4. guppy_fast_minimap2.sh
+Evaluator for Guppy_fast+Minimap2 read classification accuracy
 - Args
-  * f5 - Path to fast5 directory
-  * c - The read signal cutoff value (default=1500)
-  * sz - Read signal sample size (default=3000)
-  * type - Filter type | Length, List (default=Length)
-  * list - List of fast5 names,if the filter type is list
+  * $1 - Path to targeted species test data fastq
+  * $2 - Path to non-targeted species test data fastq
+  * $3 - Path to targeted species reference genome
+  * $4 - Path to non-targeted species reference genome
 ```
-python fast5_filter.py -f5 <fast5_dir> -c 1500 -sz 3000 -type Length
-```
-```
-python fast5_filter.py -f5 <fast5_dir> -c 1500 -sz 3000 -type List -list <fast5_list.txt>
-```
-#### 4. fast5_plotter.py
-Plots the raw signal in fast5 files
-- Args
-  * f5 - Path to fast5 directory
-  * mad - Median absolute deviation value for data normalization (default=3)
-  * rep   - Is repeatedly normalized or not (default=False)
-```
-python fast5_plotter.py -f5 <fast5_dir> -mad 5
+python guppy_fast_minimap2.sh test-covid.fastq test-zymo.fastq covid-ref.fasta zymo-ref.fasta
 ```
 
 #### 5. mycopy.py
@@ -70,14 +69,8 @@ Plot the numpy dump files
 ```
 python npy_plotter.py -np <npy_dir> -mad 5
 ```
-#### 7. fast5_reader.py
-Print reads in a fast5 file
-- Args
-  * ft - The path to fast5 files directory
-```
-python fast5_reader.py -f5 <fast5_dir>
-```
-#### 8. npy_reader.py
+
+#### 7. npy_reader.py
 Print data array in numpy dump
 - Args
   * np - The path to npy file
