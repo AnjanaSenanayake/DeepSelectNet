@@ -1,4 +1,4 @@
-# DeepSelecNet
+# DeepSelectNet
 DeepSelecNet is an improved 1D ResNet based model to classify Oxford Nanopore raw electrical signals as target or non-target for Read-Until sequence enrichment or depletion. DeepSelecNet provides enhanced model performances.
 
 ### Abstract
