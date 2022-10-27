@@ -5,6 +5,8 @@ DeepSelecNet is an improved 1D ResNet based model to classify Oxford Nanopore ra
 
 > Nanopore sequencing allows selective sequencing, the ability to programmatically reject unwanted reads in a sample. Selective sequencing has many present and future applications in genomics research and the classification of species from a pool of species is an example. Existing methods for selective sequencing for species classification are still immature and the accuracy highly varies depending on the datasets. For the five datasets we tested, the accuracy of existing methods varied in the range of ∼77%-97% (average accuracy <89%). Here we present DeepSelectNet, an accurate deep-learning-based method that can directly classify nanopore current signals belonging to a particular species. DeepSelectNet utilizes novel data preprocessing techniques and improved neural network architecture for regularization. 
 
+Pre-print: https://www.biorxiv.org/content/10.1101/2022.10.24.513498v1
+
 ## Installation
 
 ### Prerequisities
