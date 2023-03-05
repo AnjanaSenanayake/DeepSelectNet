@@ -1,4 +1,3 @@
-import os
 import click
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,20 +6,6 @@ from sklearn.preprocessing import StandardScaler, RobustScaler
 MAD_SCORE = 0
 REPEATED = False
 total_sample_count = 0
-sc_std = StandardScaler()
-sc_robust = RobustScaler()
-
-
-def z_score(data):
-    data = data.reshape(-1, 1)
-    normalized = sc_std.fit_transform(data)
-    return normalized
-
-
-def robust_scaler(data):
-    data = data.reshape(-1, 1)
-    normalized = sc_std.fit_transform(data)
-    return normalized
 
 
 def modified_zscore(data, file, MAD, consistency_correction=1.4826):
@@ -48,7 +33,6 @@ def modified_zscore(data, file, MAD, consistency_correction=1.4826):
         x = x[0]
         if REPEATED or len(x) <= 0:
             break
-
     return mad_score
 
 
@@ -59,21 +43,19 @@ def convert_to_pico(raw_data_arr, _offset, _range, _digitisation):
     return arr
 
 
-def plot_npy(root, files, count, color):
+def plot_npy(path, count, color):
     global total_sample_count
     total_sample_count = 0
-    for file in files:
-        path = root + '/' + file
-        if file.endswith(".npy"):
-            data = np.load(path)
-            for i, sample in enumerate(data):
-                if total_sample_count == count:
-                    break
-                else:
-                    plt.plot(sample, color=color)
-                    # plt.boxplot(sample, color=color)
-                    print("Plotting reads {}".format(total_sample_count))
-                    total_sample_count += 1
+    if path.endswith(".npy"):
+        data = np.load(path)
+        for i, sample in enumerate(data):
+            if total_sample_count == count:
+                break
+            else:
+                plt.plot(sample, color=color)
+                # plt.boxplot(sample, color=color)
+                print("Plotting reads {}".format(total_sample_count))
+                total_sample_count += 1
 
 
 @click.command()
@@ -81,10 +63,8 @@ def plot_npy(root, files, count, color):
 @click.option('--numpy_2', '-npy2', help='Path to npy directory')
 @click.option('--num_of_reads', '-num', default=1000, help='Number of reads', type=int)
 def main(numpy_1, numpy_2, num_of_reads):
-    for root, _, files in os.walk(numpy_1):
-        plot_npy(root, files, num_of_reads, "blue")
-    for root, _, files in os.walk(numpy_2):
-        plot_npy(root, files, num_of_reads, "red")
+    plot_npy(numpy_1, num_of_reads, "blue")
+    plot_npy(numpy_2, num_of_reads, "red")
     plt.title("Normalized signal plot for " + str(total_sample_count) + " reads")
     plt.xlabel("ith raw sample of the read")
     plt.ylabel("Normalized raw signal value")
